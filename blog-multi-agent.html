@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Built a 5-Agent AI Platform from Scratch — Gerald Yang</title>
+<meta name="description" content="A deep dive into building a multi-agent AI system with Claude API, persistent memory, Telegram integration, and autonomous task execution.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0a0a14; --card: #13132a; --accent: #7c3aed; --text: #e8e8f0; --muted: #8888a8; --border: #22223a; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+  body.light { --bg: #f8f7f4; --card: #fff; --accent: #6d28d9; --text: #1a1a2e; --muted: #555; --border: #e2e0da; }
+  .container { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
+  .back { color: var(--accent); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 32px; }
+  .back:hover { text-decoration: underline; }
+  .top-controls { position: fixed; top: 16px; right: 16px; z-index: 100; }
+  .top-btn { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; cursor: pointer; color: var(--muted); font-size: 0.85rem; font-family: inherit; transition: all 0.2s; }
+  .top-btn:hover { border-color: var(--accent); color: var(--accent); }
+  h1 { font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 40px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .meta span { display: flex; align-items: center; gap: 4px; }
+  h2 { font-size: 1.4rem; font-weight: 600; margin: 40px 0 16px; color: var(--accent); }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 28px 0 12px; }
+  p { margin-bottom: 18px; color: var(--text); font-size: 1rem; }
+  .muted { color: var(--muted); }
+  code { font-family: 'JetBrains Mono', monospace; background: var(--card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; font-size: 0.88em; }
+  pre { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; overflow-x: auto; margin-bottom: 18px; }
+  pre code { background: none; border: none; padding: 0; font-size: 0.85rem; line-height: 1.6; }
+  blockquote { border-left: 3px solid var(--accent); padding: 12px 20px; margin: 0 0 18px; background: rgba(124,58,237,0.06); border-radius: 0 8px 8px 0; color: var(--muted); font-style: italic; }
+  ul, ol { margin: 0 0 18px; padding-left: 24px; }
+  li { margin-bottom: 8px; }
+  .diagram { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--muted); line-height: 2; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .takeaway { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+  .takeaway h3 { margin-top: 0; color: var(--accent); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding-top: 20px; border-top: 1px solid var(--border); }
+  @media (max-width: 600px) { h1 { font-size: 1.6rem; } .container { padding: 24px 16px 60px; } }
+</style>
+</head>
+<body>
+<div class="top-controls"><button class="top-btn" onclick="document.body.classList.toggle('light'); this.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light'">Light</button></div>
+<div class="container">
+<a href="/" class="back">&larr; Back to portfolio</a>
+
+<h1>How I Built a 5-Agent AI Platform from Scratch</h1>
+<div class="meta">
+  <span>Gerald Yang</span>
+  <span>April 2026</span>
+  <span>8 min read</span>
+</div>
+
+<p>In January 2024, I had zero programming experience. By December, I had five AI agents running 24/7 in a Docker container on my NAS, each with its own personality, memory, and job to do. This is how.</p>
+
+<h2>The Problem</h2>
+
+<p>I wanted AI assistants that actually <em>knew</em> me. Not stateless chatbots that forget everything between sessions, but persistent agents that accumulate context over time &mdash; what projects I'm working on, how I like to communicate, what decisions I've already made.</p>
+
+<p>Commercial AI products are one-size-fits-all. I needed something custom: multiple specialized agents, each focused on a specific domain, all sharing the same infrastructure but maintaining independent memories.</p>
+
+<h2>Architecture Decisions</h2>
+
+<h3>Why Claude API + Telegram?</h3>
+
+<p>I evaluated several approaches:</p>
+<ul>
+  <li><strong>Web UI</strong> &mdash; Too much frontend work for a solo developer. I'd spend more time building the interface than the intelligence.</li>
+  <li><strong>Discord</strong> &mdash; Great for communities, awkward for personal 1:1 assistants.</li>
+  <li><strong>Telegram</strong> &mdash; Instant mobile notifications, rich media support, bot API that takes 10 minutes to set up. Winner.</li>
+</ul>
+
+<p>For the AI backbone, Claude's API offered the best balance of reasoning capability and cost. Each agent runs as a Claude Code session inside <code>tmux</code>, with Telegram as the I/O layer.</p>
+
+<div class="diagram">
+  Telegram Bot API<br>
+  &darr; &uarr;<br>
+  Claude Code (tmux session)<br>
+  &darr; &uarr;<br>
+  File System (memory / tools / skills)<br>
+  &darr;<br>
+  Docker Container on NAS
+</div>
+
+<h3>The Agent Roster</h3>
+
+<p>Each agent has a distinct personality and responsibility:</p>
+
+<ol>
+  <li><strong>Mo</strong> &mdash; Primary assistant. General-purpose development, daily companion. Stable, reliable personality.</li>
+  <li><strong>Niu</strong> &mdash; Secondary assistant. Infrastructure, DevOps, tooling. Energetic, takes initiative.</li>
+  <li><strong>Poly</strong> &mdash; Financial analyst. Polymarket trading, stock analysis, market research. Data-driven, precise.</li>
+  <li><strong>Media</strong> &mdash; Media manager. Jellyfin library, torrent management, subtitle handling. Quiet, methodical.</li>
+  <li><strong>Bootes</strong> &mdash; Creative writer. Sci-fi novel collaboration. Philosophical, deliberate.</li>
+</ol>
+
+<h3>Why Not One Agent That Does Everything?</h3>
+
+<p>Context windows are finite. An agent that handles your finances, manages your media library, <em>and</em> writes fiction will inevitably lose context on all three. Specialization keeps each agent's working memory focused and relevant.</p>
+
+<p>It's the same reason companies have departments instead of one employee who does everything.</p>
+
+<h2>Memory System</h2>
+
+<p>The most critical architectural decision was persistent memory. Each agent maintains:</p>
+
+<ul>
+  <li><strong>CLAUDE.md</strong> &mdash; Identity file. Personality, rules, preferences. Loaded every conversation.</li>
+  <li><strong>Memory files</strong> &mdash; Structured knowledge (user preferences, project state, feedback). Indexed in <code>MEMORY.md</code>.</li>
+  <li><strong>Conversation history</strong> &mdash; JSONL logs of every interaction, searchable for context.</li>
+  <li><strong>Skills</strong> &mdash; Reusable instruction sets for recurring tasks (daily reflection, content generation, etc.).</li>
+</ul>
+
+<blockquote>The key insight: memory isn't just about storing facts. It's about building a relationship. An agent that remembers you corrected it last Tuesday behaves differently than one that doesn't.</blockquote>
+
+<h2>The Heartbeat System</h2>
+
+<p>Agents aren't just reactive &mdash; they have a heartbeat scheduler that triggers proactive behaviors:</p>
+
+<pre><code>// heartbeat.js - Cron-based task scheduler
+// Sends messages to tmux sessions on schedule
+const tasks = [
+  { name: "Daily reflection", bot: "mo", cron: "0 5 * * *" },
+  { name: "Daily reflection", bot: "niu", cron: "0 5 * * *" },
+  { name: "Market check", bot: "poly", cron: "0 9 * * 1-5" },
+  // ...
+];</code></pre>
+
+<p>Every morning at 5 AM, each agent receives a reflection prompt. They review their domain status, analyze interaction signals, and send a report. This means I wake up to five status updates, not silence.</p>
+
+<h2>Infrastructure: Docker + NAS</h2>
+
+<p>Everything runs in a single Docker container (<code>claude-workspace</code>) on a home NAS (UGOS, AMD Ryzen 5 5600G, 64GB RAM). The choice was intentional:</p>
+
+<ul>
+  <li><strong>Why not cloud?</strong> &mdash; Cost. Five always-on agents on AWS would be $200+/month. My NAS runs 24/7 anyway.</li>
+  <li><strong>Why Docker?</strong> &mdash; Isolation + portability. I migrated the entire system from an Ubuntu desktop to the NAS in one evening.</li>
+  <li><strong>Why one container?</strong> &mdash; Shared file system. Agents can read each other's public files (like a family intro document) without network calls.</li>
+</ul>
+
+<p>External access is handled by Cloudflare Tunnel &mdash; no port forwarding, no DDNS, just a YAML config pointing subdomains to local ports.</p>
+
+<h2>What I Learned</h2>
+
+<div class="takeaway">
+  <h3>Key Takeaways</h3>
+  <ul>
+    <li><strong>Personality matters more than capability.</strong> An agent with a well-defined character feels like a collaborator. A generic one feels like a tool.</li>
+    <li><strong>Memory is the moat.</strong> After months of accumulated context, my agents understand my preferences better than any off-the-shelf product could.</li>
+    <li><strong>Specialization beats generalization.</strong> Five focused agents outperform one overloaded agent.</li>
+    <li><strong>Infrastructure is underrated.</strong> The boring stuff (Docker, tmux, cron, Cloudflare Tunnel) is what makes everything reliable.</li>
+    <li><strong>Start shipping, then iterate.</strong> My first agent was a single tmux session with a text file for memory. It evolved from there.</li>
+  </ul>
+</div>
+
+<h2>What's Next</h2>
+
+<p>The platform is stable and running in production. Current focus areas:</p>
+<ul>
+  <li>Inter-agent communication (agents asking each other for help)</li>
+  <li>Automated skill discovery (agents creating their own reusable workflows)</li>
+  <li>Better observability (centralized dashboard for all agent activity)</li>
+</ul>
+
+<p>If you're thinking about building something similar, my advice: start with one agent, give it a name, and let it accumulate memory. You'll be surprised how quickly it starts feeling like a teammate.</p>
+
+<hr>
+<footer>&copy; 2026 Gerald Yang &mdash; <a href="/" style="color:var(--accent);text-decoration:none">Back to portfolio</a></footer>
+</div>
+</body>
+</html>

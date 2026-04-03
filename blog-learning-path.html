@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Retail Manager to Shipping Production Code in 12 Months — Gerald Yang</title>
+<meta name="description" content="How I went from zero programming experience to 7+ production services in one year, and what I'd tell someone starting the same journey.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0a0a14; --card: #13132a; --accent: #7c3aed; --text: #e8e8f0; --muted: #8888a8; --border: #22223a; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+  body.light { --bg: #f8f7f4; --card: #fff; --accent: #6d28d9; --text: #1a1a2e; --muted: #555; --border: #e2e0da; }
+  .container { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
+  .back { color: var(--accent); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 32px; }
+  .back:hover { text-decoration: underline; }
+  .top-controls { position: fixed; top: 16px; right: 16px; z-index: 100; }
+  .top-btn { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; cursor: pointer; color: var(--muted); font-size: 0.85rem; font-family: inherit; transition: all 0.2s; }
+  .top-btn:hover { border-color: var(--accent); color: var(--accent); }
+  h1 { font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 40px; display: flex; gap: 16px; flex-wrap: wrap; }
+  h2 { font-size: 1.4rem; font-weight: 600; margin: 40px 0 16px; color: var(--accent); }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 28px 0 12px; }
+  p { margin-bottom: 18px; font-size: 1rem; }
+  code { font-family: 'JetBrains Mono', monospace; background: var(--card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; font-size: 0.88em; }
+  blockquote { border-left: 3px solid var(--accent); padding: 12px 20px; margin: 0 0 18px; background: rgba(124,58,237,0.06); border-radius: 0 8px 8px 0; color: var(--muted); font-style: italic; }
+  ul, ol { margin: 0 0 18px; padding-left: 24px; }
+  li { margin-bottom: 8px; }
+  .timeline { border-left: 2px solid var(--accent); padding-left: 20px; margin: 24px 0; }
+  .tl-item { margin-bottom: 20px; position: relative; }
+  .tl-item::before { content: ''; position: absolute; left: -25px; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .tl-month { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent); font-weight: 600; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .takeaway { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+  .takeaway h3 { margin-top: 0; color: var(--accent); }
+  .stat-row { display: flex; gap: 16px; margin: 24px 0; flex-wrap: wrap; }
+  .stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; text-align: center; flex: 1; min-width: 120px; }
+  .stat-box .num { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+  .stat-box .label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding-top: 20px; border-top: 1px solid var(--border); }
+  @media (max-width: 600px) { h1 { font-size: 1.6rem; } .container { padding: 24px 16px 60px; } .stat-row { gap: 8px; } }
+</style>
+</head>
+<body>
+<div class="top-controls"><button class="top-btn" onclick="document.body.classList.toggle('light'); this.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light'">Light</button></div>
+<div class="container">
+<a href="/" class="back">&larr; Back to portfolio</a>
+
+<h1>From Retail Manager to Shipping Production Code in 12 Months</h1>
+<div class="meta">
+  <span>Gerald Yang</span>
+  <span>April 2026</span>
+  <span>7 min read</span>
+</div>
+
+<p>In January 2024, I couldn't write a function. By December, I had 7+ web services running in production, serving real users daily. No bootcamp. No CS degree. Just a decade of tech curiosity and a refusal to stay on the sideline.</p>
+
+<p>Here's the honest version of how it happened.</p>
+
+<h2>Background: Not Starting from Zero</h2>
+
+<p>I want to be upfront: I didn't learn to code from absolute zero in any meaningful sense. I had <strong>9 years</strong> in the tech industry &mdash; selling computers, managing an Apple reseller, diagnosing hardware as a Geek Squad field agent. I understood:</p>
+
+<ul>
+  <li>How systems work conceptually (networking, storage, operating systems)</li>
+  <li>What users actually need (thousands of real conversations)</li>
+  <li>How businesses operate (P&L, inventory, team management)</li>
+  <li>PowerShell scripting for work automation (my first "programming")</li>
+</ul>
+
+<p>What I <em>didn't</em> have: any experience building web applications, any understanding of APIs, any knowledge of JavaScript/Python/Node.js, or any idea how to deploy a service.</p>
+
+<h2>The Timeline</h2>
+
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-month">Jan &ndash; Feb 2024</div>
+    <p>Started with Claude as a coding tutor. Asked it to explain every line. Built tiny scripts &mdash; a weather fetcher, a file renamer, a price scraper. Felt impossibly slow.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">Mar &ndash; Apr 2024</div>
+    <p>First real project: a Telegram bot that answered questions using Claude's API. Learned about API keys, async/await, error handling. <strong>First time something I built was running on a server.</strong></p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">May &ndash; Jun 2024</div>
+    <p>Built the Polymarket trading dashboard. This was the forcing function &mdash; I had real money at stake, so I <em>had</em> to get the API integration right. Learned Express, REST APIs, ethers.js.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">Jul &ndash; Aug 2024</div>
+    <p>ESP32 e-ink display project. Jumped from web to embedded (C, ESP-IDF). Completely different world. Built a server-side renderer that pushes weather/stocks/news to a physical e-ink screen.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">Sep &ndash; Oct 2024</div>
+    <p>Multi-agent AI platform. This is where everything clicked. I understood enough to architect a system, not just glue APIs together. Docker, tmux, persistent memory, autonomous scheduling.</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">Nov &ndash; Dec 2024</div>
+    <p>Infrastructure maturity. Cloudflare Tunnel, home dashboard, unified toolbox portal, monitoring. Shifted from "building things" to "maintaining production systems."</p>
+  </div>
+</div>
+
+<div class="stat-row">
+  <div class="stat-box"><div class="num">7+</div><div class="label">Production Services</div></div>
+  <div class="stat-box"><div class="num">5</div><div class="label">AI Agents</div></div>
+  <div class="stat-box"><div class="num">0</div><div class="label">Bootcamps</div></div>
+  <div class="stat-box"><div class="num">12</div><div class="label">Months</div></div>
+</div>
+
+<h2>What Actually Worked</h2>
+
+<h3>1. AI as a Tutor, Not a Crutch</h3>
+
+<p>I used Claude extensively, but I never copy-pasted without understanding. My rule: <strong>if I can't explain what every line does, I don't ship it.</strong> This was slower at first, but it meant I actually learned.</p>
+
+<p>The pattern: describe what I want &rarr; get code &rarr; read every line &rarr; ask "why this instead of that?" &rarr; modify it &rarr; break it &rarr; fix it.</p>
+
+<h3>2. Real Problems Over Tutorials</h3>
+
+<p>I never completed a tutorial or online course. Every project started with a problem I actually had:</p>
+<ul>
+  <li>"I want to track my Polymarket trades" &rarr; Trading dashboard</li>
+  <li>"I want a smart home display" &rarr; E-ink project</li>
+  <li>"I want AI assistants that remember me" &rarr; Multi-agent platform</li>
+  <li>"I need quick quotes for clients" &rarr; ServiceQuote tool</li>
+</ul>
+
+<blockquote>The motivation to solve your own problems is 10x stronger than the motivation to complete someone else's exercise.</blockquote>
+
+<h3>3. Ship Early, Iterate Always</h3>
+
+<p>My first Telegram bot was 50 lines of code with no error handling. It crashed constantly. But it worked well enough to prove the concept, and that momentum carried me forward. I've rewritten every project at least twice.</p>
+
+<h3>4. Retail Skills Transfer More Than You'd Think</h3>
+
+<p>This surprised me most. My retail management background directly translated:</p>
+<ul>
+  <li><strong>Customer empathy</strong> &rarr; I build UIs that non-technical people can actually use</li>
+  <li><strong>P&L thinking</strong> &rarr; I consider hosting costs, API costs, and ROI before building</li>
+  <li><strong>Troubleshooting instinct</strong> &rarr; Debugging hardware for years trains systematic thinking</li>
+  <li><strong>Communication</strong> &rarr; I can explain technical decisions to stakeholders in plain language</li>
+</ul>
+
+<h2>What I'd Tell Someone Starting Today</h2>
+
+<div class="takeaway">
+  <h3>Honest Advice</h3>
+  <ul>
+    <li><strong>You don't need permission.</strong> No degree, no bootcamp certificate, no hiring manager's approval. If you can ship something that works, you're a developer.</li>
+    <li><strong>Pick a language and stick with it.</strong> I chose JavaScript/Node.js because it runs everywhere (frontend, backend, scripts). Don't language-hop.</li>
+    <li><strong>Deploy from day one.</strong> A project running on a server is infinitely more convincing than code on your laptop. Learn Docker early.</li>
+    <li><strong>Build for yourself first.</strong> Your own problems are the best curriculum. You'll push through the hard parts because you actually want the result.</li>
+    <li><strong>AI accelerates learning, it doesn't replace it.</strong> Use AI tools to explain, not just to generate. The developers who will thrive are the ones who understand what they're shipping.</li>
+  </ul>
+</div>
+
+<h2>Where I Am Now</h2>
+
+<p>I'm a Geek Squad field agent by day and a full-stack developer by every other hour. My production system runs 24/7: five AI agents, a trading dashboard, a media management suite, an IoT display, and a unified web portal &mdash; all on a NAS in my house.</p>
+
+<p>I'm looking for a role where I can combine technical building with the communication and business skills I've developed over the past decade. If your team needs someone who ships fast and explains clearly, <a href="mailto:gerald6331@gmail.com" style="color:var(--accent)">let's talk</a>.</p>
+
+<hr>
+<footer>&copy; 2026 Gerald Yang &mdash; <a href="/" style="color:var(--accent);text-decoration:none">Back to portfolio</a></footer>
+</div>
+</body>
+</html>

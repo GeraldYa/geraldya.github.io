@@ -192,7 +192,7 @@
   </div>
   <div class="tl-item">
     <div class="tl-year">2024</div>
-    <div class="tl-content" data-i18n="tl4">Self-taught code. Shipped 7+ web services, a 5-agent AI platform, a trading dashboard, and an IoT display.</div>
+    <div class="tl-content" data-i18n="tl4">Self-taught code using AI as tutor, real problems as curriculum. JavaScript/Node.js first, then Python, C, Docker. Zero bootcamps. Shipped 7+ web services, a 5-agent AI platform, a trading dashboard, and an IoT display.</div>
   </div>
   <div class="tl-item">
     <div class="tl-year" data-i18n="tl5y">Now</div>
@@ -208,7 +208,7 @@
     <div class="card-icon fallback">&#129302;</div>
     <h3 data-i18n="p1t">Multi-Agent AI Platform</h3>
     <div class="tech">Claude API / Telegram / Docker / Linux</div>
-    <p data-i18n="p1d">5 specialized AI agents with autonomous task execution, persistent memory, and dedicated Telegram interfaces. Full deployment pipeline with continuous monitoring.</p>
+    <p data-i18n="p1d"><strong>Problem:</strong> Commercial AI tools are stateless and generic. <strong>Solution:</strong> 5 specialized agents with persistent memory, autonomous scheduling, and Telegram interfaces. <strong>Result:</strong> 24/7 production system handling development, finance, media, and creative writing.</p>
     <a href="https://github.com/GeraldYa/kairos">View on GitHub &rarr;</a>
   </div>
 
@@ -217,7 +217,7 @@
     <div class="card-icon fallback">&#128200;</div>
     <h3 data-i18n="p2t">Polymarket Trading Dashboard</h3>
     <div class="tech">Node.js / Express / ethers.js / Android</div>
-    <p data-i18n="p2d">Real-time prediction market analytics with multi-account tracking, automated trade execution, smart-money signal detection, and companion Android app.</p>
+    <p data-i18n="p2d"><strong>Problem:</strong> No tool to manage multiple Polymarket accounts with real-time analytics. <strong>Solution:</strong> Full-stack dashboard with automated trade execution and smart-money signal detection. <strong>Result:</strong> Live trading system with companion Android app.</p>
     <a href="https://github.com/GeraldYa/polymarket-dashboard">View on GitHub &rarr;</a>
   </div>
 
@@ -226,7 +226,7 @@
     <div class="card-icon fallback">&#128736;</div>
     <h3 data-i18n="p3t">Toolbox Web Portal</h3>
     <div class="tech">Node.js / Express / HTML/CSS/JS</div>
-    <p data-i18n="p3d">Unified gateway consolidating 7+ services with health monitoring, dynamic routing, and integrated document preview system.</p>
+    <p data-i18n="p3d"><strong>Problem:</strong> 7+ services scattered across different ports with no central access point. <strong>Solution:</strong> Unified web portal with health monitoring, Cloudflare Tunnel routing, and document preview. <strong>Result:</strong> One URL to access everything, anywhere.</p>
     <a href="https://github.com/GeraldYa/toolbox-portal">View on GitHub &rarr;</a>
   </div>
 
@@ -299,6 +299,22 @@
 </div>
 <div style="text-align:center; margin: -30px 0 50px;">
   <button class="top-btn" onclick="toggleProjects()" id="show-more-btn" data-i18n="showmore" style="padding: 8px 24px;">Show 4 more projects</button>
+</div>
+
+<h2 class="reveal" data-i18n="writing">Writing</h2>
+<div class="projects reveal" style="grid-template-columns: 1fr 1fr; margin-bottom: 50px;">
+  <div class="card">
+    <div class="card-icon">&#128736;</div>
+    <h3 data-i18n="w1t">How I Built a 5-Agent AI Platform from Scratch</h3>
+    <p data-i18n="w1d">Architecture decisions, memory systems, and what I learned building a multi-agent AI platform that runs 24/7 on a home NAS.</p>
+    <a href="blog-multi-agent.html">Read &rarr;</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">&#128640;</div>
+    <h3 data-i18n="w2t">From Retail Manager to Shipping Production Code in 12 Months</h3>
+    <p data-i18n="w2d">The honest timeline of how I went from zero programming experience to 7+ production services. No bootcamp, no CS degree.</p>
+    <a href="blog-learning-path.html">Read &rarr;</a>
+  </div>
 </div>
 
 <h2 class="reveal" data-i18n="beyond">Beyond Code</h2>
@@ -411,7 +427,12 @@ const i18n = {
     tl1: "Small computer shop. Fixed machines, sold tech, learned people.",
     tl2: "Store Manager. Revenue up 100%+. Ran P&L, coached teams, managed vendors.",
     tl3: "Geek Squad field tech by day. 3D printing maker by night. 800+ downloads on MakerWorld.",
-    tl4: "Self-taught code. Shipped 7+ web services, a 5-agent AI platform, a trading dashboard, and an IoT display.",
+    tl4: "Self-taught code using AI as tutor, real problems as curriculum. JavaScript/Node.js first, then Python, C, Docker. Zero bootcamps. Shipped 7+ web services, a 5-agent AI platform, a trading dashboard, and an IoT display.",
+    writing: "Writing",
+    w1t: "How I Built a 5-Agent AI Platform from Scratch",
+    w1d: "Architecture decisions, memory systems, and what I learned building a multi-agent AI platform that runs 24/7 on a home NAS.",
+    w2t: "From Retail Manager to Shipping Production Code in 12 Months",
+    w2d: "The honest timeline of how I went from zero programming experience to 7+ production services. No bootcamp, no CS degree.",
     tl5y: "Now", tl5: "I build things and explain them. Looking for a team that values both.",
     connectp: "I ship products, explain technology, and solve real problems. If that's what your team needs, let's talk.",
     bc1t: "Tech Communicator", bc1: "9+ years explaining complex technology to non-technical customers, coaching retail teams, and running workshops. I make the complicated simple.",
