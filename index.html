@@ -48,7 +48,13 @@
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; }
   .card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(74, 158, 255, 0.1); }
   .card-icon { font-size: 1.8rem; margin-bottom: 12px; }
-  .card-img { width: 100%; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border); }
+  .card-img { width: 100%; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.2s; }
+  .card-img:hover { opacity: 0.9; }
+
+  /* Lightbox */
+  .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; cursor: zoom-out; justify-content: center; align-items: center; }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 95%; max-height: 95%; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
   .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
   .card .tech { font-size: 0.8rem; color: var(--accent); margin-bottom: 10px; }
   .card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 12px; }
@@ -111,6 +117,7 @@
 </head>
 <body>
 
+<div class="lightbox" onclick="this.classList.remove('active')"><img id="lb-img" src="" alt=""></div>
 <button class="theme-toggle" onclick="toggleTheme()">Light Mode</button>
 <div class="container">
 
@@ -313,6 +320,15 @@
 </div>
 
 <script>
+// Lightbox for screenshots
+document.querySelectorAll('.card-img').forEach(img => {
+  img.addEventListener('click', () => {
+    const lb = document.querySelector('.lightbox');
+    document.getElementById('lb-img').src = img.src;
+    lb.classList.add('active');
+  });
+});
+
 // Theme toggle
 function toggleTheme() {
   const body = document.body;
