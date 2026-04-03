@@ -76,6 +76,24 @@
   footer .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
   footer .footer-links a:hover { color: var(--accent); }
 
+  /* Timeline */
+  .timeline { margin-bottom: 50px; padding-left: 24px; border-left: 2px solid var(--accent); }
+  .tl-item { margin-bottom: 24px; position: relative; }
+  .tl-item::before { content: ''; position: absolute; left: -29px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .tl-year { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .tl-content { font-size: 1rem; color: var(--muted); line-height: 1.6; }
+
+  /* Theme toggle */
+  .theme-toggle { position: fixed; top: 16px; right: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; cursor: pointer; color: var(--muted); font-size: 0.85rem; z-index: 100; transition: all 0.3s; }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Light theme */
+  body.light { --bg: #f5f5f8; --card: #fff; --accent: #2563eb; --text: #222; --muted: #555; --border: #ddd; --accent-glow: rgba(37, 99, 235, 0.1); }
+  body.light .logo-mark rect { fill: #fff; stroke: #2563eb; }
+  body.light .logo-mark text { fill: #2563eb; }
+  body.light .card-img { border-color: #ddd; }
+  body.light .tl-item::before { background: #2563eb; }
+
   /* Animations */
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .fade-in { opacity: 0; animation: fadeInUp 0.6s ease forwards; }
@@ -93,6 +111,7 @@
 </head>
 <body>
 
+<button class="theme-toggle" onclick="toggleTheme()">Light Mode</button>
 <div class="container">
 
 <header>
@@ -121,8 +140,27 @@
 </div>
 
 <h2 class="reveal">My Story</h2>
-<div class="summary reveal" style="text-align: left; max-width: 100%; margin-bottom: 50px;">
-  I started in a small computer shop in St. Catharines, fixing machines and selling tech. Over seven years I worked my way up to Store Manager, where I learned that the hardest part of technology isn't building it &mdash; it's helping people understand and trust it. That insight stuck with me when I taught myself to code and started building AI-powered tools. Today I ship real products: trading dashboards, multi-agent AI systems, IoT displays, and web platforms &mdash; all self-built and running in production. I'm looking for a role where both sides of me matter: the builder and the communicator.
+<div class="timeline reveal">
+  <div class="tl-item">
+    <div class="tl-year">2015</div>
+    <div class="tl-content">Started at a small computer shop in St. Catharines &mdash; fixing machines, selling tech, learning that the hardest part isn't the hardware, it's the human on the other side.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-year">2018</div>
+    <div class="tl-content">Promoted to Store Manager. Grew revenue 100%+ in 12 months. Learned P&amp;L, team coaching, vendor management &mdash; and that technology is only useful if people trust it.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-year">2022</div>
+    <div class="tl-content">Joined Best Buy as Geek Squad Field Agent. Thousands of on-site consultations across Niagara &mdash; translating tech for real people, every day.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-year">2024</div>
+    <div class="tl-content">Taught myself to code. Built and deployed 7+ production web services, a 5-agent AI platform, a crypto trading dashboard, and an IoT display system &mdash; all from scratch.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-year">Now</div>
+    <div class="tl-content">Looking for a role where both sides matter: the builder who ships real products, and the communicator who makes technology accessible.</div>
+  </div>
 </div>
 
 <h2 class="reveal">Projects</h2>
@@ -279,6 +317,21 @@
 </div>
 
 <script>
+// Theme toggle
+function toggleTheme() {
+  const body = document.body;
+  const btn = document.querySelector('.theme-toggle');
+  body.classList.toggle('light');
+  btn.textContent = body.classList.contains('light') ? 'Dark Mode' : 'Light Mode';
+  localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+}
+(function() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    document.querySelector('.theme-toggle').textContent = 'Dark Mode';
+  }
+})();
+
 // Counter animation
 function animateCounters() {
   document.querySelectorAll('.stat-num').forEach(el => {
