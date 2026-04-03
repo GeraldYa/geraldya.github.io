@@ -14,22 +14,24 @@
 <meta name="twitter:description" content="Full-stack developer shipping multi-agent AI systems, trading dashboards, and production infrastructure.">
 <link rel="canonical" href="https://geraldya.github.io">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --bg: #0f0f1a; --card: #1a1a2e; --accent: #4a9eff; --text: #e0e0e0; --muted: #888; --border: #2a2a40; --accent-glow: rgba(74, 158, 255, 0.15); }
+  :root { --bg: #0a0a14; --card: #13132a; --accent: #7c3aed; --accent2: #f59e0b; --text: #e8e8f0; --muted: #8888a8; --border: #22223a; --accent-glow: rgba(124, 58, 237, 0.12); }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--bg); background-image: radial-gradient(ellipse at 20% 0%, rgba(124,58,237,0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(245,158,11,0.04) 0%, transparent 50%); color: var(--text); line-height: 1.6; }
 
   .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
 
   header { text-align: center; padding: 50px 0 20px; }
   .logo-fixed { position: fixed; top: 14px; left: 16px; z-index: 100; opacity: 0.8; transition: opacity 0.2s; }
   .logo-fixed:hover { opacity: 1; }
-  h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; }
+  h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -1px; line-height: 1.1; }
   h1 span { color: var(--accent); }
-  .tagline { font-size: 1.1rem; color: var(--muted); margin-bottom: 16px; }
+  .tagline { font-size: 1.1rem; color: var(--muted); margin-bottom: 16px; letter-spacing: 0.5px; }
   .links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
   .links a { color: var(--accent); text-decoration: none; font-size: 0.9rem; padding: 6px 16px; border: 1px solid var(--accent); border-radius: 20px; transition: all 0.2s; }
-  .links a:hover { background: var(--accent); color: #fff; }
+  .links a:hover { background: var(--accent); color: #fff; transform: translateY(-1px); box-shadow: 0 4px 12px var(--accent-glow); }
   .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .cta a { color: #fff; text-decoration: none; font-size: 0.9rem; padding: 10px 24px; background: var(--accent); border-radius: 8px; font-weight: 600; transition: all 0.2s; }
   .cta a:hover { background: #3a8aee; transform: translateY(-1px); }
@@ -38,7 +40,7 @@
 
   .stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 50px; flex-wrap: wrap; }
   .stat { text-align: center; }
-  .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+  .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
   .stat-label { font-size: 0.8rem; color: var(--muted); }
 
   h2 { font-size: 1.3rem; margin-bottom: 24px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
@@ -48,7 +50,7 @@
   @media (max-width: 600px) { .projects { grid-template-columns: 1fr; } }
 
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; }
-  .card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(74, 158, 255, 0.1); }
+  .card:hover { border-color: var(--accent); transform: translateY(-4px) scale(1.01); box-shadow: 0 16px 40px rgba(124, 58, 237, 0.15), 0 0 0 1px rgba(124,58,237,0.1); }
   .card-icon { font-size: 1.8rem; margin-bottom: 12px; }
   .card-img { width: 100%; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.2s; }
   .card-img:hover { opacity: 0.9; }
@@ -68,7 +70,7 @@
 
   .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 50px; }
   .skill { background: var(--card); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: var(--muted); transition: all 0.2s; }
-  .skill:hover { border-color: var(--accent); color: var(--accent); }
+  .skill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); transform: translateY(-1px); }
 
   .experience { margin-bottom: 50px; }
   .job { margin-bottom: 20px; padding-left: 16px; border-left: 2px solid var(--border); }
@@ -90,8 +92,10 @@
   /* Timeline */
   .timeline { margin-bottom: 50px; padding-left: 24px; border-left: 2px solid var(--accent); }
   .tl-item { margin-bottom: 24px; position: relative; }
-  .tl-item::before { content: ''; position: absolute; left: -29px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
-  .tl-year { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .tl-item::before { content: ''; position: absolute; left: -29px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+  .tl-item:last-child::before { animation: tlPulse 2s ease-in-out infinite; }
+  @keyframes tlPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0.4); } 50% { box-shadow: 0 0 0 6px rgba(124,58,237,0); } }
+  .tl-year { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
   .tl-content { font-size: 1rem; color: var(--muted); line-height: 1.6; }
 
   /* Theme toggle */
@@ -104,11 +108,11 @@
   .lang-menu a:hover { color: var(--accent); background: var(--accent-glow); }
 
   /* Light theme */
-  body.light { --bg: #f5f5f8; --card: #fff; --accent: #2563eb; --text: #222; --muted: #555; --border: #ddd; --accent-glow: rgba(37, 99, 235, 0.1); }
-  body.light .logo-mark rect { fill: #fff; stroke: #2563eb; }
-  body.light .logo-mark text { fill: #2563eb; }
-  body.light .card-img { border-color: #ddd; }
-  body.light .tl-item::before { background: #2563eb; }
+  body.light { --bg: #f8f7f4; --card: #fff; --accent: #6d28d9; --accent2: #d97706; --text: #1a1a2e; --muted: #555; --border: #e2e0da; --accent-glow: rgba(109, 40, 217, 0.08); }
+  body.light .logo-mark rect { fill: #fff; stroke: #6d28d9; }
+  body.light .logo-mark text { fill: #6d28d9; }
+  body.light .card-img { border-color: #e2e0da; }
+  body.light .tl-item::before { background: #6d28d9; }
 
   /* Animations */
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -116,6 +120,16 @@
   .fade-in:nth-child(1) { animation-delay: 0s; }
   .fade-in:nth-child(2) { animation-delay: 0.1s; }
   .fade-in:nth-child(3) { animation-delay: 0.2s; }
+
+  /* Staggered card reveals */
+  .projects .card { opacity: 0; animation: cardReveal 0.5s ease forwards; }
+  .projects .card:nth-child(1) { animation-delay: 0.05s; }
+  .projects .card:nth-child(2) { animation-delay: 0.1s; }
+  .projects .card:nth-child(3) { animation-delay: 0.15s; }
+  .projects .card:nth-child(4) { animation-delay: 0.2s; }
+  .projects .card:nth-child(5) { animation-delay: 0.25s; }
+  .projects .card:nth-child(6) { animation-delay: 0.3s; }
+  @keyframes cardReveal { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
   header { animation: fadeInUp 0.6s ease; }
   .summary { animation: fadeInUp 0.6s ease 0.2s both; }
   .stats { animation: fadeInUp 0.6s ease 0.3s both; }
@@ -128,7 +142,7 @@
 <body>
 
 <div class="lightbox" onclick="this.classList.remove('active')"><img id="lb-img" src="" alt=""></div>
-<a href="#" class="logo-fixed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36"><rect width="100" height="100" rx="20" fill="#1a1a2e" stroke="#4a9eff" stroke-width="4"/><text x="50" y="68" font-family="system-ui, sans-serif" font-size="56" font-weight="bold" fill="#4a9eff" text-anchor="middle">GY</text></svg></a>
+<a href="#" class="logo-fixed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36"><rect width="100" height="100" rx="20" fill="#13132a" stroke="#7c3aed" stroke-width="4"/><text x="50" y="68" font-family="monospace" font-size="52" font-weight="bold" fill="#7c3aed" text-anchor="middle">GY</text></svg></a>
 <div class="top-controls">
   <div style="position:relative">
     <button class="top-btn" onclick="document.querySelector('.lang-menu').classList.toggle('show')">EN</button>
