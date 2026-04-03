@@ -304,7 +304,13 @@
 </div>
 
 <h2 class="reveal" data-i18n="writing">Writing</h2>
-<div class="projects reveal" style="grid-template-columns: 1fr 1fr; margin-bottom: 50px;">
+<div class="projects reveal" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 50px;">
+  <div class="card" style="text-align:center;">
+    <img src="screenshots/tokenomic-cover.jpg" alt="Tokenomic: REPRICED by AI" class="card-img" style="max-height:280px; width:auto; margin: 0 auto 14px; display:block; cursor:pointer;" onerror="this.classList.add('hidden')">
+    <h3 data-i18n="bookt">Tokenomic: REPRICED by AI</h3>
+    <p data-i18n="bookd" style="font-size:0.82rem;">Published book (Amazon, Feb 2026). How AI is repricing intelligence, labor, and you. 74 pages.</p>
+    <a href="https://a.co/d/04EfeYcG" target="_blank" class="read-btn">View on Amazon &rarr;</a>
+  </div>
   <div class="card">
     <div class="card-icon">&#128736;</div>
     <h3 data-i18n="w1t">How I Built a 5-Agent AI Platform from Scratch</h3>
@@ -425,7 +431,8 @@ const i18n = {
   en: {
     tagline: "Builder. Communicator. Maker.",
     stat1: "Production Services", stat2: "AI Agents Deployed", stat3: "Years in Tech", stat4: "Years Client-Facing",
-    story: "My Story", projects: "Projects", beyond: "Beyond Code", techstack: "Tech Stack", exp: "Experience", edu: "Education", connect: "Let's Connect",
+    story: "My Story", projects: "Projects", beyond: "Beyond Code", techstack: "Tech Stack", exp: "Experience", edu: "Education", connect: "Let's Connect", writing: "Writing",
+    bookt: "Tokenomic: REPRICED by AI", bookd: "Published book (Amazon, Feb 2026). How AI is repricing intelligence, labor, and you. 74 pages.",
     tl1: "Small computer shop. Fixed machines, sold tech, learned people.",
     tl2: "Store Manager. Revenue up 100%+. Ran P&L, coached teams, managed vendors.",
     tl3: "Geek Squad field tech by day. 3D printing maker by night. 800+ downloads on MakerWorld.",
@@ -462,7 +469,8 @@ const i18n = {
   zh: {
     tagline: "\u5efa\u9020\u8005\u3002\u6c9f\u901a\u8005\u3002\u521b\u5ba2\u3002",
     stat1: "\u751f\u4ea7\u670d\u52a1", stat2: "AI \u667a\u80fd\u4f53\u5df2\u90e8\u7f72", stat3: "\u5e74\u6280\u672f\u7ecf\u9a8c", stat4: "\u5e74\u5ba2\u6237\u670d\u52a1",
-    story: "\u6211\u7684\u6545\u4e8b", projects: "\u9879\u76ee\u4f5c\u54c1", beyond: "\u4ee3\u7801\u4e4b\u5916", techstack: "\u6280\u672f\u6808", exp: "\u5de5\u4f5c\u7ecf\u5386", edu: "\u6559\u80b2\u80cc\u666f", connect: "\u8054\u7cfb\u6211",
+    story: "\u6211\u7684\u6545\u4e8b", projects: "\u9879\u76ee\u4f5c\u54c1", beyond: "\u4ee3\u7801\u4e4b\u5916", techstack: "\u6280\u672f\u6808", exp: "\u5de5\u4f5c\u7ecf\u5386", edu: "\u6559\u80b2\u80cc\u666f", connect: "\u8054\u7cfb\u6211", writing: "\u5199\u4f5c",
+    bookt: "\u7b97\u529b\u7ecf\u6d4e\u5b66: REPRICED by AI", bookd: "\u5df2\u51fa\u7248\u4e66\u7c4d\uff08\u4e9a\u9a6c\u900a\uff0c2026\u5e742\u6708\uff09\u3002AI\u5982\u4f55\u91cd\u65b0\u5b9a\u4ef7\u667a\u529b\u3001\u52b3\u52a8\u548c\u4f60\u300274\u9875\u3002",
     tl1: "\u5c0f\u7535\u8111\u5e97\u3002\u4fee\u673a\u5668\uff0c\u5356\u6280\u672f\uff0c\u8bfb\u61c2\u4eba\u3002",
     tl2: "\u5e97\u957f\u3002\u8425\u6536\u589e\u957f100%+\u3002\u7ba1\u8d22\u52a1\u3001\u5e26\u56e2\u961f\u3001\u5bf9\u63a5\u4f9b\u5e94\u5546\u3002",
     tl3: "\u767d\u5929Geek Squad\u73b0\u573a\u6280\u672f\u5458\u3002\u665a\u4e0a3D\u6253\u5370\u521b\u5ba2\u3002MakerWorld 800+\u4e0b\u8f7d\u3002",
