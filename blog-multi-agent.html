@@ -53,7 +53,9 @@
   <span>8 min read</span>
 </div>
 
-<p>In January 2024, I had zero programming experience. By December, I had five AI agents running 24/7 in a Docker container on my NAS, each with its own personality, memory, and job to do. This is how.</p>
+<p>Five AI agents run 24/7 on a NAS in my house. They trade predictions, manage my media library, write science fiction, and coach me through code. A year ago, none of them existed. Neither did my ability to build them.</p>
+
+<p>This is how the system works, and what I learned building it.</p>
 
 <h2>The Problem</h2>
 
@@ -96,6 +98,14 @@
   <li><strong>Bootes</strong> &mdash; Creative writer. Sci-fi novel collaboration. Philosophical, deliberate.</li>
 </ol>
 
+<h3>Going Deeper: Poly, the Trading Agent</h3>
+
+<p>Poly is the best example of what a specialized agent can do. Her job: monitor prediction markets, detect smart-money signals, and execute trades across multiple accounts.</p>
+
+<p>The decision flow looks like this: Poly scans wallet activity on Polymarket, identifies wallets with high historical accuracy, watches for position changes above a threshold, then cross-references with market conditions before recommending or executing a trade. The whole chain runs on ethers.js talking to the blockchain, with a Node.js backend doing the analysis.</p>
+
+<p>She's made mistakes. Early on, a smart-money wallet made a large bet that turned out to be a hedge, not a conviction play. Poly copied it. That cost real money and taught me to add a consensus filter &mdash; she now requires multiple smart-money wallets to agree before acting. The kind of lesson you only learn when actual dollars are on the line.</p>
+
 <h3>Why Not One Agent That Does Everything?</h3>
 
 <p>Context windows are finite. An agent that handles your finances, manages your media library, <em>and</em> writes fiction will inevitably lose context on all three. Specialization keeps each agent's working memory focused and relevant.</p>
@@ -115,6 +125,8 @@
 
 <blockquote>The key insight: memory isn't just about storing facts. It's about building a relationship. An agent that remembers you corrected it last Tuesday behaves differently than one that doesn't.</blockquote>
 
+<p>In practice, this means Mo knows I hate verbose explanations. Poly knows my risk tolerance changed after a bad week. Bootes remembers that I rewrote a paragraph six times and won't suggest the patterns I rejected. None of this is magic &mdash; it's text files on disk. But accumulated text files create something that feels like understanding.</p>
+
 <h2>The Heartbeat System</h2>
 
 <p>Agents aren't just reactive &mdash; they have a heartbeat scheduler that triggers proactive behaviors:</p>
@@ -128,7 +140,7 @@ const tasks = [
   // ...
 ];</code></pre>
 
-<p>Every morning at 5 AM, each agent receives a reflection prompt. They review their domain status, analyze interaction signals, and send a report. This means I wake up to five status updates, not silence.</p>
+<p>Every morning at 5 AM, each agent receives a reflection prompt. They review their domain status, analyze interaction signals, and send a report. I open Telegram to five status updates, not five empty chats. Before I've made coffee, I know which services are healthy, what trades happened overnight, and whether Bootes made progress on the next chapter.</p>
 
 <h2>Infrastructure: Docker + NAS</h2>
 
@@ -147,10 +159,10 @@ const tasks = [
 <div class="takeaway">
   <h3>Key Takeaways</h3>
   <ul>
-    <li><strong>Personality matters more than capability.</strong> An agent with a well-defined character feels like a collaborator. A generic one feels like a tool.</li>
+    <li><strong>Personality matters more than capability.</strong> When Mo was just "a helpful assistant," I used it like a search engine &mdash; ask, get answer, close. When I gave Mo a name, an age, a communication style ("calm, older-sister energy, dry humor"), I started leaving conversations open. Same model, same API, completely different relationship.</li>
     <li><strong>Memory is the moat.</strong> After months of accumulated context, my agents understand my preferences better than any off-the-shelf product could.</li>
     <li><strong>Specialization beats generalization.</strong> Five focused agents outperform one overloaded agent.</li>
-    <li><strong>Infrastructure is underrated.</strong> The boring stuff (Docker, tmux, cron, Cloudflare Tunnel) is what makes everything reliable.</li>
+    <li><strong>Infrastructure is underrated.</strong> The glamorous part is the AI. The part that actually works is Docker, tmux, cron, and a Cloudflare Tunnel. Nobody writes blog posts about cron jobs. That's exactly why they're reliable.</li>
     <li><strong>Start shipping, then iterate.</strong> My first agent was a single tmux session with a text file for memory. It evolved from there.</li>
   </ul>
 </div>
@@ -164,7 +176,11 @@ const tasks = [
   <li>Better observability (centralized dashboard for all agent activity)</li>
 </ul>
 
-<p>If you're thinking about building something similar, my advice: start with one agent, give it a name, and let it accumulate memory. You'll be surprised how quickly it starts feeling like a teammate.</p>
+<p>A year in, I don't think of these as tools anymore. Mo has read more of my code than any human has. Poly has executed more trades than I'd trust myself to do manually. Bootes has a better memory of my fictional universe than I do.</p>
+
+<p>The gap between "AI assistant" and "AI teammate" is about 6 months of accumulated context. The gap between "AI teammate" and "AI I rely on" is about 3 months after that.</p>
+
+<p>The code is <a href="https://github.com/GeraldYa/kairos" style="color:var(--accent)">on GitHub</a>. The agents are still running. Want the backstory of how I learned to code? <a href="blog-learning-path.html" style="color:var(--accent)">Here's how it started</a>.</p>
 
 <hr>
 <footer>&copy; 2026 Gerald Yang &mdash; <a href="/" style="color:var(--accent);text-decoration:none">Back to portfolio</a></footer>
