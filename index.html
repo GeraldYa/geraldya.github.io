@@ -51,6 +51,9 @@
   .card-icon { font-size: 1.8rem; margin-bottom: 12px; }
   .card-img { width: 100%; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.2s; }
   .card-img:hover { opacity: 0.9; }
+  .card-img.hidden { display: none; }
+  .card-icon.fallback { display: none; }
+  .card-img.hidden + .card-icon.fallback { display: block; }
 
   /* Lightbox */
   .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; cursor: zoom-out; justify-content: center; align-items: center; }
@@ -185,7 +188,8 @@
 <div class="projects reveal">
 
   <div class="card">
-    <img src="screenshots/multi-agent.jpg" alt="Multi-Agent AI Platform" class="card-img">
+    <img src="screenshots/multi-agent.jpg" alt="Multi-Agent AI Platform" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#129302;</div>
     <h3 data-i18n="p1t">Multi-Agent AI Platform</h3>
     <div class="tech">Claude API / Telegram / Docker / Linux</div>
     <p data-i18n="p1d">5 specialized AI agents with autonomous task execution, persistent memory, and dedicated Telegram interfaces. Full deployment pipeline with continuous monitoring.</p>
@@ -193,7 +197,8 @@
   </div>
 
   <div class="card">
-    <img src="screenshots/polymarket.jpg" alt="Polymarket Trading Dashboard" class="card-img">
+    <img src="screenshots/polymarket.jpg" alt="Polymarket Trading Dashboard" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128200;</div>
     <h3 data-i18n="p2t">Polymarket Trading Dashboard</h3>
     <div class="tech">Node.js / Express / ethers.js / Android</div>
     <p data-i18n="p2d">Real-time prediction market analytics with multi-account tracking, automated trade execution, smart-money signal detection, and companion Android app.</p>
@@ -201,7 +206,8 @@
   </div>
 
   <div class="card">
-    <img src="screenshots/toolbox.jpg" alt="Toolbox Web Portal" class="card-img">
+    <img src="screenshots/toolbox.jpg" alt="Toolbox Web Portal" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128736;</div>
     <h3 data-i18n="p3t">Toolbox Web Portal</h3>
     <div class="tech">Node.js / Express / HTML/CSS/JS</div>
     <p data-i18n="p3d">Unified gateway consolidating 7+ services with health monitoring, dynamic routing, and integrated document preview system.</p>
@@ -209,7 +215,8 @@
   </div>
 
   <div class="card">
-    <img src="screenshots/eink.jpg" alt="E-ink Smart Display" class="card-img">
+    <img src="screenshots/eink.jpg" alt="E-ink Smart Display" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128187;</div>
     <h3 data-i18n="p4t">E-ink Smart Display</h3>
     <div class="tech">Node.js / Canvas / RSS / AI Backgrounds</div>
     <p data-i18n="p4d">IoT dashboard rendering RSS feeds, weather, stocks, and AI-generated backgrounds to e-ink displays with real-time data feeds.</p>
@@ -217,7 +224,8 @@
   </div>
 
   <div class="card">
-    <img src="screenshots/thought-evolution.jpg" alt="Thought Evolution" class="card-img">
+    <img src="screenshots/thought-evolution.jpg" alt="Thought Evolution" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#9999;</div>
     <h3 data-i18n="p5t">Thought Evolution</h3>
     <div class="tech">Python / Gemini API / SQLite</div>
     <p data-i18n="p5d">AI-powered content processing platform. Paste once, publish everywhere &mdash; multi-model rewriting with user-tiered access control.</p>
@@ -225,7 +233,8 @@
   </div>
 
   <div class="card">
-    <img src="screenshots/geeksquad.jpg" alt="Geek Squad Quote Tool" class="card-img">
+    <img src="screenshots/geeksquad.jpg" alt="Geek Squad Quote Tool" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128295;</div>
     <h3 data-i18n="p6t">Geek Squad Quote Tool</h3>
     <div class="tech">Node.js / Express / AI Pricing</div>
     <p data-i18n="p6d">Service quote generator with Best Buy SKU lookup and AI-powered pricing recommendations for field technicians.</p>
@@ -233,7 +242,8 @@
   </div>
 
   <div class="card">
-    <div class="card-icon">&#128196;</div>
+    <img src="screenshots/portfolio-template.jpg" alt="Portfolio Template" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128196;</div>
     <h3 data-i18n="p7t">Portfolio Template</h3>
     <div class="tech">HTML / CSS / JavaScript</div>
     <p data-i18n="p7d">Open-source, single-file developer portfolio template with dark/light theme, 4-language i18n, scroll animations, and GitHub Pages deployment. Zero dependencies.</p>
