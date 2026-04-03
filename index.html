@@ -43,7 +43,8 @@
 
   h2 { font-size: 1.3rem; margin-bottom: 24px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 
-  .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 50px; }
+  .projects { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 50px; }
+  @media (max-width: 900px) { .projects { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 600px) { .projects { grid-template-columns: 1fr; } }
 
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; }
@@ -225,6 +226,27 @@
   </div>
 
   <div class="card">
+    <img src="screenshots/field-dispatch.jpg" alt="FieldOps" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128205;</div>
+    <h3 data-i18n="p9t">FieldOps &mdash; Smart Dispatch</h3>
+    <div class="tech">Node.js / Express / Leaflet / Scheduling</div>
+    <p data-i18n="p9d">AI-powered field service dispatch with route optimization, skill matching, weather-aware scheduling, and interactive map visualization.</p>
+    <a href="https://fieldops.kan-pian.com" target="_blank">Live Demo &rarr;</a> &nbsp; <a href="https://github.com/GeraldYa/field-dispatch">GitHub &rarr;</a>
+  </div>
+
+  <div class="card">
+    <img src="screenshots/store-ops.jpg" alt="StoreOps" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128202;</div>
+    <h3 data-i18n="p10t">StoreOps &mdash; Retail Dashboard</h3>
+    <div class="tech">Node.js / Express / Analytics</div>
+    <p data-i18n="p10d">Multi-store retail operations dashboard with P&amp;L tracking, inventory health alerts, workforce scheduling, and automated business insights.</p>
+    <a href="https://storeops.kan-pian.com" target="_blank">Live Demo &rarr;</a> &nbsp; <a href="https://github.com/GeraldYa/store-ops">GitHub &rarr;</a>
+  </div>
+
+</div>
+<div class="projects reveal more-projects" style="display:none;">
+
+  <div class="card">
     <img src="screenshots/thought-evolution.jpg" alt="Thought Evolution" class="card-img" onerror="this.classList.add('hidden')">
     <div class="card-icon fallback">&#9999;</div>
     <h3 data-i18n="p5t">Thought Evolution</h3>
@@ -232,9 +254,6 @@
     <p data-i18n="p5d">AI-powered content processing platform. Paste once, publish everywhere &mdash; multi-model rewriting with user-tiered access control.</p>
     <a href="https://github.com/GeraldYa/thought-evolution">View on GitHub &rarr;</a>
   </div>
-
-</div>
-<div class="projects reveal more-projects" style="display:none;">
 
   <div class="card">
     <img src="screenshots/geeksquad.jpg" alt="ServiceQuote" class="card-img" onerror="this.classList.add('hidden')">
@@ -259,31 +278,13 @@
     <div class="card-icon fallback">&#128424;</div>
     <h3 data-i18n="p8t">3D Printing &amp; CAD Design</h3>
     <div class="tech">Shapr3D / Bambu X1C / Ender 3 S1 / MakerWorld</div>
-    <p data-i18n="p8d">Original functional designs published on MakerWorld with 800+ downloads and 296 likes. From Festool tool accessories to desk organizers — solving real problems with CAD and 3D printing.</p>
+    <p data-i18n="p8d">Original functional designs published on MakerWorld with 800+ downloads and 296 likes. From Festool tool accessories to desk organizers &mdash; solving real problems with CAD and 3D printing.</p>
     <a href="https://makerworld.com/@GeraldWorkShop">View on MakerWorld &rarr;</a>
-  </div>
-
-  <div class="card">
-    <img src="screenshots/field-dispatch.jpg" alt="FieldOps" class="card-img" onerror="this.classList.add('hidden')">
-    <div class="card-icon fallback">&#128205;</div>
-    <h3 data-i18n="p9t">FieldOps &mdash; Smart Dispatch</h3>
-    <div class="tech">Node.js / Express / Leaflet / Scheduling</div>
-    <p data-i18n="p9d">AI-powered field service dispatch with route optimization, skill matching, weather-aware scheduling, and interactive map visualization.</p>
-    <a href="https://github.com/GeraldYa/field-dispatch">View on GitHub &rarr;</a>
-  </div>
-
-  <div class="card">
-    <img src="screenshots/store-ops.jpg" alt="StoreOps" class="card-img" onerror="this.classList.add('hidden')">
-    <div class="card-icon fallback">&#128202;</div>
-    <h3 data-i18n="p10t">StoreOps &mdash; Retail Dashboard</h3>
-    <div class="tech">Node.js / Express / Analytics</div>
-    <p data-i18n="p10d">Multi-store retail operations dashboard with P&amp;L tracking, inventory health alerts, workforce scheduling, and automated business insights.</p>
-    <a href="https://github.com/GeraldYa/store-ops">View on GitHub &rarr;</a>
   </div>
 
 </div>
 <div style="text-align:center; margin: -30px 0 50px;">
-  <button class="top-btn" onclick="toggleProjects()" id="show-more-btn" data-i18n="showmore" style="padding: 8px 24px;">Show 5 more projects</button>
+  <button class="top-btn" onclick="toggleProjects()" id="show-more-btn" data-i18n="showmore" style="padding: 8px 24px;">Show 4 more projects</button>
 </div>
 
 <h2 class="reveal" data-i18n="beyond">Beyond Code</h2>
@@ -541,7 +542,7 @@ function toggleProjects() {
     btn.textContent = 'Show less';
   } else {
     more.style.display = 'none';
-    btn.textContent = 'Show 5 more projects';
+    btn.textContent = 'Show 4 more projects';
   }
 }
 
