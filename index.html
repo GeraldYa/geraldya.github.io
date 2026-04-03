@@ -4,30 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gerald Yang — AI Solutions Builder</title>
+<meta name="description" content="Gerald Yang — AI Solutions Builder. Full-stack developer shipping multi-agent AI systems, trading dashboards, IoT displays, and production infrastructure. Based in Ontario, Canada.">
+<meta property="og:title" content="Gerald Yang — AI Solutions Builder">
+<meta property="og:description" content="I build real products with AI — not demos, not decks. 10+ years in technology, shipping full-stack applications and multi-agent AI systems.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geraldya.github.io">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gerald Yang — AI Solutions Builder">
+<meta name="twitter:description" content="Full-stack developer shipping multi-agent AI systems, trading dashboards, and production infrastructure.">
+<link rel="canonical" href="https://geraldya.github.io">
 <style>
-  :root { --bg: #0f0f1a; --card: #1a1a2e; --accent: #4a9eff; --text: #e0e0e0; --muted: #888; --border: #2a2a40; }
+  :root { --bg: #0f0f1a; --card: #1a1a2e; --accent: #4a9eff; --text: #e0e0e0; --muted: #888; --border: #2a2a40; --accent-glow: rgba(74, 158, 255, 0.15); }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 
   .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
 
-  header { text-align: center; padding: 60px 0 40px; }
+  header { text-align: center; padding: 60px 0 20px; }
   h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; }
   h1 span { color: var(--accent); }
   .tagline { font-size: 1.1rem; color: var(--muted); margin-bottom: 16px; }
-  .links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
   .links a { color: var(--accent); text-decoration: none; font-size: 0.9rem; padding: 6px 16px; border: 1px solid var(--accent); border-radius: 20px; transition: all 0.2s; }
   .links a:hover { background: var(--accent); color: #fff; }
+  .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta a { color: #fff; text-decoration: none; font-size: 0.9rem; padding: 10px 24px; background: var(--accent); border-radius: 8px; font-weight: 600; transition: all 0.2s; }
+  .cta a:hover { background: #3a8aee; transform: translateY(-1px); }
 
-  .summary { text-align: center; max-width: 700px; margin: 0 auto 50px; color: var(--muted); font-size: 0.95rem; }
+  .summary { text-align: center; max-width: 700px; margin: 30px auto 50px; color: var(--muted); font-size: 0.95rem; }
+
+  .stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 50px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); }
 
   h2 { font-size: 1.3rem; margin-bottom: 24px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 
   .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 50px; }
   @media (max-width: 600px) { .projects { grid-template-columns: 1fr; } }
 
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: border-color 0.2s; }
-  .card:hover { border-color: var(--accent); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(74, 158, 255, 0.1); }
+  .card-icon { font-size: 1.8rem; margin-bottom: 12px; }
   .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
   .card .tech { font-size: 0.8rem; color: var(--accent); margin-bottom: 10px; }
   .card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 12px; }
@@ -35,13 +53,20 @@
   .card a:hover { text-decoration: underline; }
 
   .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 50px; }
-  .skill { background: var(--card); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: var(--muted); }
+  .skill { background: var(--card); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: var(--muted); transition: all 0.2s; }
+  .skill:hover { border-color: var(--accent); color: var(--accent); }
 
   .experience { margin-bottom: 50px; }
-  .job { margin-bottom: 20px; }
+  .job { margin-bottom: 20px; padding-left: 16px; border-left: 2px solid var(--border); }
+  .job:hover { border-left-color: var(--accent); }
   .job h3 { font-size: 1rem; }
   .job .meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; }
   .job p { font-size: 0.88rem; color: var(--muted); }
+
+  .contact { text-align: center; padding: 40px 0; margin-bottom: 30px; background: var(--card); border-radius: 12px; border: 1px solid var(--border); }
+  .contact h2 { border: none; margin-bottom: 12px; }
+  .contact p { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; }
+  .contact .links { margin-bottom: 0; }
 
   footer { text-align: center; padding: 30px 0; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
 </style>
@@ -58,23 +83,35 @@
     <a href="https://www.linkedin.com/in/gerald-yang-ai">LinkedIn</a>
     <a href="mailto:gerald6331@gmail.com">Email</a>
   </div>
+  <div class="cta">
+    <a href="https://github.com/GeraldYa/geraldya.github.io/raw/main/Gerald-Yang-Resume-2026.pdf" download>Download Resume</a>
+  </div>
 </header>
 
 <div class="summary">
-  I build real products with AI — not demos, not decks. 10+ years in technology, from hands-on hardware support to independently shipping full-stack applications, multi-agent AI systems, and production infrastructure. Based in Ontario, Canada.
+  I build real products with AI &mdash; not demos, not decks. 10+ years in technology, from hands-on hardware support to independently shipping full-stack applications, multi-agent AI systems, and production infrastructure. Based in Ontario, Canada.
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">7+</div><div class="stat-label">Production Services</div></div>
+  <div class="stat"><div class="stat-num">5</div><div class="stat-label">AI Agents Deployed</div></div>
+  <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Years in Tech</div></div>
+  <div class="stat"><div class="stat-num">100%+</div><div class="stat-label">Revenue Growth</div></div>
 </div>
 
 <h2>Projects</h2>
 <div class="projects">
 
   <div class="card">
+    <div class="card-icon">&#129302;</div>
     <h3>Multi-Agent AI Platform</h3>
     <div class="tech">Claude API / Telegram / Docker / Linux</div>
-    <p>5 specialized AI agents with autonomous task execution, persistent memory, and dedicated Telegram interfaces. Full deployment pipeline with zero-downtime monitoring.</p>
+    <p>5 specialized AI agents with autonomous task execution, persistent memory, and dedicated Telegram interfaces. Full deployment pipeline with continuous monitoring.</p>
     <a href="https://github.com/GeraldYa/kairos">View on GitHub &rarr;</a>
   </div>
 
   <div class="card">
+    <div class="card-icon">&#128200;</div>
     <h3>Polymarket Trading Dashboard</h3>
     <div class="tech">Node.js / Express / ethers.js / Android</div>
     <p>Real-time prediction market analytics with multi-account tracking, automated trade execution, smart-money signal detection, and companion Android app.</p>
@@ -82,6 +119,7 @@
   </div>
 
   <div class="card">
+    <div class="card-icon">&#128736;</div>
     <h3>Toolbox Web Portal</h3>
     <div class="tech">Node.js / Express / HTML/CSS/JS</div>
     <p>Unified gateway consolidating 7+ services with health monitoring, dynamic routing, and integrated document preview system.</p>
@@ -89,6 +127,7 @@
   </div>
 
   <div class="card">
+    <div class="card-icon">&#128187;</div>
     <h3>E-ink Smart Display</h3>
     <div class="tech">Node.js / Canvas / RSS / AI Backgrounds</div>
     <p>IoT dashboard rendering RSS feeds, weather, stocks, and AI-generated backgrounds to e-ink displays with real-time data feeds.</p>
@@ -96,13 +135,15 @@
   </div>
 
   <div class="card">
+    <div class="card-icon">&#9999;</div>
     <h3>Thought Evolution</h3>
     <div class="tech">Python / Gemini API / SQLite</div>
-    <p>AI-powered content processing platform. Paste once, publish everywhere — multi-model rewriting with user-tiered access control.</p>
+    <p>AI-powered content processing platform. Paste once, publish everywhere &mdash; multi-model rewriting with user-tiered access control.</p>
     <a href="https://github.com/GeraldYa/thought-evolution">View on GitHub &rarr;</a>
   </div>
 
   <div class="card">
+    <div class="card-icon">&#128295;</div>
     <h3>Geek Squad Quote Tool</h3>
     <div class="tech">Node.js / Express / AI Pricing</div>
     <p>Service quote generator with Best Buy SKU lookup and AI-powered pricing recommendations for field technicians.</p>
@@ -139,17 +180,17 @@
 <div class="experience">
   <div class="job">
     <h3>Geek Squad Field Agent</h3>
-    <div class="meta">Best Buy Canada — Oct 2022 - Present</div>
+    <div class="meta">Best Buy Canada &mdash; Oct 2022 - Present</div>
     <p>Self-directed field technician. Multi-platform diagnostics, MDM deployment, PowerShell automation. Train and mentor junior technicians.</p>
   </div>
   <div class="job">
     <h3>Store Manager</h3>
-    <div class="meta">DF Computer (Apple Authorized Reseller) — Sep 2018 - Feb 2022</div>
+    <div class="meta">DF Computer (Apple Authorized Reseller) &mdash; Sep 2018 - Feb 2022</div>
     <p>Grew revenue 100%+ in 12 months. Full P&L management, team coaching, Apple ATLAS certified.</p>
   </div>
   <div class="job">
     <h3>Sales Associate / Technician</h3>
-    <div class="meta">DF Computer — Jul 2015 - Sep 2018</div>
+    <div class="meta">DF Computer &mdash; Jul 2015 - Sep 2018</div>
     <p>Front-line sales and technical support. 45% close rate, repeat client base generating 60% of revenue.</p>
   </div>
 </div>
@@ -158,16 +199,26 @@
 <div class="experience">
   <div class="job">
     <h3>Bachelor of Arts in Economics</h3>
-    <div class="meta">Brock University — 2016</div>
+    <div class="meta">Brock University &mdash; 2016</div>
   </div>
   <div class="job">
     <h3>Certifications</h3>
-    <div class="meta">CompTIA A+ (2023) / Apple ATLAS (Sales & Service)</div>
+    <div class="meta">CompTIA A+ (2023) / Apple ATLAS (Sales &amp; Service)</div>
+  </div>
+</div>
+
+<div class="contact">
+  <h2>Let's Connect</h2>
+  <p>Currently exploring AI Engineer, Solutions Engineer, and Full-Stack Developer opportunities.</p>
+  <div class="links">
+    <a href="mailto:gerald6331@gmail.com">gerald6331@gmail.com</a>
+    <a href="https://www.linkedin.com/in/gerald-yang-ai">LinkedIn</a>
+    <a href="https://github.com/GeraldYa">GitHub</a>
   </div>
 </div>
 
 <footer>
-  &copy; 2026 Gerald Yang — Built with purpose.
+  &copy; 2026 Gerald Yang &mdash; Built with purpose.
 </footer>
 
 </div>
