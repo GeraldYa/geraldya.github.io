@@ -69,6 +69,8 @@
   .card a:hover { text-decoration: underline; }
   .card a.read-btn { display: inline-block; padding: 8px 20px; background: var(--accent); color: #fff !important; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: all 0.2s; }
   .card a.read-btn:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 4px 16px var(--accent-glow); opacity: 0.9; }
+  .badge-published { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); margin-left: 8px; vertical-align: middle; animation: badgeGlow 2s ease-in-out infinite alternate; }
+  @keyframes badgeGlow { from { box-shadow: 0 0 0 rgba(245,158,11,0); } to { box-shadow: 0 0 8px rgba(245,158,11,0.15); } }
 
   .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 50px; }
   .skill { background: var(--card); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: var(--muted); transition: all 0.2s; }
@@ -307,7 +309,7 @@
 <div class="projects reveal" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 50px;">
   <div class="card" style="text-align:center;">
     <img src="screenshots/tokenomic-cover.jpg" alt="Tokenomic: REPRICED by AI" class="card-img" style="max-height:280px; width:auto; margin: 0 auto 14px; display:block; cursor:pointer;" onerror="this.classList.add('hidden')">
-    <h3 data-i18n="bookt">Tokenomic: REPRICED by AI</h3>
+    <h3 data-i18n="bookt">Tokenomic: REPRICED by AI <span class="badge-published">Published</span></h3>
     <p data-i18n="bookd" style="font-size:0.82rem;">Published book (Amazon, Feb 2026). How AI is repricing intelligence, labor, and you. 74 pages.</p>
     <a href="https://a.co/d/04EfeYcG" target="_blank" class="read-btn">View on Amazon &rarr;</a>
   </div>
