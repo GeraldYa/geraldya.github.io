@@ -233,6 +233,9 @@
     <a href="https://github.com/GeraldYa/thought-evolution">View on GitHub &rarr;</a>
   </div>
 
+</div>
+<div class="projects reveal more-projects" style="display:none;">
+
   <div class="card">
     <img src="screenshots/geeksquad.jpg" alt="ServiceQuote" class="card-img" onerror="this.classList.add('hidden')">
     <div class="card-icon fallback">&#128295;</div>
@@ -260,6 +263,27 @@
     <a href="https://makerworld.com/@GeraldWorkShop">View on MakerWorld &rarr;</a>
   </div>
 
+  <div class="card">
+    <img src="screenshots/field-dispatch.jpg" alt="FieldOps" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128205;</div>
+    <h3 data-i18n="p9t">FieldOps &mdash; Smart Dispatch</h3>
+    <div class="tech">Node.js / Express / Leaflet / Scheduling</div>
+    <p data-i18n="p9d">AI-powered field service dispatch with route optimization, skill matching, weather-aware scheduling, and interactive map visualization.</p>
+    <a href="https://github.com/GeraldYa/field-dispatch">View on GitHub &rarr;</a>
+  </div>
+
+  <div class="card">
+    <img src="screenshots/store-ops.jpg" alt="StoreOps" class="card-img" onerror="this.classList.add('hidden')">
+    <div class="card-icon fallback">&#128202;</div>
+    <h3 data-i18n="p10t">StoreOps &mdash; Retail Dashboard</h3>
+    <div class="tech">Node.js / Express / Analytics</div>
+    <p data-i18n="p10d">Multi-store retail operations dashboard with P&amp;L tracking, inventory health alerts, workforce scheduling, and automated business insights.</p>
+    <a href="https://github.com/GeraldYa/store-ops">View on GitHub &rarr;</a>
+  </div>
+
+</div>
+<div style="text-align:center; margin: -30px 0 50px;">
+  <button class="top-btn" onclick="toggleProjects()" id="show-more-btn" data-i18n="showmore" style="padding: 8px 24px;">Show 5 more projects</button>
 </div>
 
 <h2 class="reveal" data-i18n="beyond">Beyond Code</h2>
@@ -387,6 +411,8 @@ const i18n = {
     p6t: "ServiceQuote", p6d: "Service quote generator with product SKU lookup and AI-powered pricing recommendations for field technicians.",
     p7t: "Portfolio Template", p7d: "Open-source, single-file developer portfolio template with dark/light theme, 4-language i18n, scroll animations, and GitHub Pages deployment. Zero dependencies.",
     p8t: "3D Printing & CAD Design", p8d: "Original functional designs published on MakerWorld with 800+ downloads and 296 likes. From Festool tool accessories to desk organizers \u2014 solving real problems with CAD and 3D printing.",
+    p9t: "FieldOps \u2014 Smart Dispatch", p9d: "AI-powered field service dispatch with route optimization, skill matching, weather-aware scheduling, and interactive map visualization.",
+    p10t: "StoreOps \u2014 Retail Dashboard", p10d: "Multi-store retail operations dashboard with P&L tracking, inventory health alerts, workforce scheduling, and automated business insights.",
     e1t: "Geek Squad Field Agent", e1m: "Best Buy Canada \u2014 Oct 2022 - Present", e1d: "Self-directed field technician. Multi-platform diagnostics, MDM deployment, PowerShell automation. Train and mentor junior technicians.",
     e2t: "Store Manager", e2m: "DF Computer (Apple Authorized Reseller) \u2014 Sep 2018 - Feb 2022", e2d: "Grew revenue 100%+ in 12 months. Full P&L management, team coaching, Apple ATLAS certified.",
     e3t: "Sales Associate / Technician", e3m: "DF Computer \u2014 Jul 2015 - Sep 2018", e3d: "Front-line sales and technical support. 45% close rate, repeat client base generating 60% of revenue.",
@@ -417,6 +443,8 @@ const i18n = {
     p6t: "ServiceQuote", p6d: "\u670d\u52a1\u62a5\u4ef7\u751f\u6210\u5668\uff0c\u652f\u6301\u4ea7\u54c1SKU\u67e5\u8be2\u548cAI\u667a\u80fd\u5b9a\u4ef7\u63a8\u8350\uff0c\u4e13\u4e3a\u73b0\u573a\u6280\u672f\u5458\u8bbe\u8ba1\u3002",
     p7t: "\u4f5c\u54c1\u96c6\u6a21\u677f", p7d: "\u5f00\u6e90\u5355\u6587\u4ef6\u5f00\u53d1\u8005\u4f5c\u54c1\u96c6\u6a21\u677f\uff0c\u652f\u6301\u660e\u6697\u4e3b\u9898\u5207\u6362\u3001\u56db\u8bed\u8a00i18n\u3001\u6eda\u52a8\u52a8\u753b\u3001GitHub Pages\u4e00\u952e\u90e8\u7f72\u3002\u96f6\u4f9d\u8d56\u3002",
     p8t: "3D\u6253\u5370\u4e0eCAD\u8bbe\u8ba1", p8d: "\u5728MakerWorld\u53d1\u5e03\u539f\u521b\u529f\u80fd\u6027\u8bbe\u8ba1\uff0c800+\u4e0b\u8f7d\u3001296\u8d5e\u3002\u4eceFestool\u5de5\u5177\u914d\u4ef6\u5230\u684c\u9762\u6536\u7eb3\u2014\u2014\u7528CAD\u548c3D\u6253\u5370\u89e3\u51b3\u771f\u5b9e\u95ee\u9898\u3002",
+    p9t: "FieldOps \u2014 \u667a\u80fd\u8c03\u5ea6", p9d: "AI\u9a71\u52a8\u7684\u5916\u52e4\u670d\u52a1\u8c03\u5ea6\uff0c\u652f\u6301\u8def\u7ebf\u4f18\u5316\u3001\u6280\u80fd\u5339\u914d\u3001\u5929\u6c14\u611f\u77e5\u6392\u73ed\u548c\u4ea4\u4e92\u5f0f\u5730\u56fe\u3002",
+    p10t: "StoreOps \u2014 \u96f6\u552e\u770b\u677f", p10d: "\u591a\u5e97\u94fa\u96f6\u552e\u8fd0\u8425\u770b\u677f\uff0c\u542b\u635f\u76ca\u8ffd\u8e2a\u3001\u5e93\u5b58\u9884\u8b66\u3001\u6392\u73ed\u7ba1\u7406\u548c\u81ea\u52a8\u5316\u5546\u4e1a\u6d1e\u5bdf\u3002",
     e1t: "Geek Squad \u73b0\u573a\u6280\u672f\u5458", e1m: "Best Buy \u52a0\u62ff\u5927 \u2014 2022\u5e7410\u6708\u81f3\u4eca", e1d: "\u81ea\u4e3b\u5de5\u4f5c\u7684\u73b0\u573a\u6280\u672f\u5458\u3002\u591a\u5e73\u53f0\u8bca\u65ad\u3001MDM\u90e8\u7f72\u3001PowerShell\u81ea\u52a8\u5316\u3002\u57f9\u8bad\u548c\u6307\u5bfc\u521d\u7ea7\u6280\u672f\u5458\u3002",
     e2t: "\u5e97\u957f", e2m: "DF Computer\uff08Apple\u6388\u6743\u7ecf\u9500\u5546\uff09\u2014 2018\u5e749\u6708\u81f32022\u5e742\u6708", e2d: "12\u4e2a\u6708\u5185\u8425\u6536\u589e\u957f100%+\u3002\u5168\u9762\u8d22\u52a1\u7ba1\u7406\u3001\u56e2\u961f\u6559\u7ec3\uff0cApple ATLAS\u8ba4\u8bc1\u3002",
     e3t: "\u9500\u552e / \u6280\u672f\u652f\u6301", e3m: "DF Computer \u2014 2015\u5e747\u6708\u81f32018\u5e749\u6708", e3d: "\u4e00\u7ebf\u9500\u552e\u548c\u6280\u672f\u652f\u6301\u300245%\u6210\u4ea4\u7387\uff0c\u56de\u5934\u5ba2\u8d21\u732e60%\u8425\u6536\u3002",
@@ -447,6 +475,8 @@ const i18n = {
     p6t: "ServiceQuote", p6d: "G\u00e9n\u00e9rateur de devis avec recherche de SKU produit et recommandations tarifaires par IA pour les techniciens terrain.",
     p7t: "Mod\u00e8le de portfolio", p7d: "Mod\u00e8le open-source de portfolio d\u00e9veloppeur en un seul fichier. Th\u00e8me clair/sombre, i18n 4 langues, animations au d\u00e9filement, d\u00e9ploiement GitHub Pages. Z\u00e9ro d\u00e9pendance.",
     p8t: "Impression 3D et conception CAO", p8d: "Designs fonctionnels originaux publi\u00e9s sur MakerWorld avec 800+ t\u00e9l\u00e9chargements et 296 likes. Des accessoires Festool aux organisateurs de bureau.",
+    p9t: "FieldOps \u2014 Dispatch intelligent", p9d: "Dispatch de service terrain pilot\u00e9 par IA avec optimisation d'itin\u00e9raires, correspondance de comp\u00e9tences, planification m\u00e9t\u00e9o-consciente et carte interactive.",
+    p10t: "StoreOps \u2014 Tableau de bord retail", p10d: "Tableau de bord multi-magasin avec suivi P&L, alertes d'inventaire, planification des effectifs et insights automatis\u00e9s.",
     e1t: "Technicien terrain Geek Squad", e1m: "Best Buy Canada \u2014 Oct. 2022 - Pr\u00e9sent", e1d: "Technicien terrain autonome. Diagnostics multiplateformes, d\u00e9ploiement MDM, automatisation PowerShell. Formation et mentorat de techniciens juniors.",
     e2t: "G\u00e9rant de magasin", e2m: "DF Computer (revendeur agr\u00e9\u00e9 Apple) \u2014 Sep. 2018 - F\u00e9v. 2022", e2d: "Revenus en hausse de 100%+ en 12 mois. Gestion P&L compl\u00e8te, coaching d'\u00e9quipe, certifi\u00e9 Apple ATLAS.",
     e3t: "Vendeur / Technicien", e3m: "DF Computer \u2014 Juil. 2015 - Sep. 2018", e3d: "Vente et support technique en premi\u00e8re ligne. Taux de conclusion de 45%, clients r\u00e9guliers g\u00e9n\u00e9rant 60% du chiffre d'affaires.",
@@ -477,6 +507,8 @@ const i18n = {
     p6t: "ServiceQuote", p6d: "Generador de cotizaciones con b\u00fasqueda de SKU de producto y recomendaciones de precios por IA para t\u00e9cnicos de campo.",
     p7t: "Plantilla de portafolio", p7d: "Plantilla open-source de portafolio para desarrolladores en un solo archivo. Tema claro/oscuro, i18n en 4 idiomas, animaciones, despliegue en GitHub Pages. Cero dependencias.",
     p8t: "Impresi\u00f3n 3D y dise\u00f1o CAD", p8d: "Dise\u00f1os funcionales originales publicados en MakerWorld con 800+ descargas y 296 likes. Desde accesorios Festool hasta organizadores de escritorio.",
+    p9t: "FieldOps \u2014 Despacho inteligente", p9d: "Despacho de servicio de campo con IA, optimizaci\u00f3n de rutas, coincidencia de habilidades, programaci\u00f3n consciente del clima y mapa interactivo.",
+    p10t: "StoreOps \u2014 Panel retail", p10d: "Panel de operaciones retail multi-tienda con seguimiento P&L, alertas de inventario, planificaci\u00f3n de personal e insights automatizados.",
     e1t: "T\u00e9cnico de campo Geek Squad", e1m: "Best Buy Canad\u00e1 \u2014 Oct. 2022 - Presente", e1d: "T\u00e9cnico de campo aut\u00f3nomo. Diagn\u00f3sticos multiplataforma, despliegue MDM, automatizaci\u00f3n PowerShell. Capacitaci\u00f3n y mentor\u00eda de t\u00e9cnicos junior.",
     e2t: "Gerente de tienda", e2m: "DF Computer (revendedor autorizado Apple) \u2014 Sep. 2018 - Feb. 2022", e2d: "Ingresos +100% en 12 meses. Gesti\u00f3n P&L completa, coaching de equipo, certificado Apple ATLAS.",
     e3t: "Vendedor / T\u00e9cnico", e3m: "DF Computer \u2014 Jul. 2015 - Sep. 2018", e3d: "Ventas y soporte t\u00e9cnico en primera l\u00ednea. Tasa de cierre del 45%, clientes recurrentes generando 60% de ingresos.",
@@ -499,6 +531,19 @@ function setLang(lang) {
   localStorage.setItem('lang', lang);
 }
 (function() { const l = localStorage.getItem('lang'); if (l && l !== 'en') setLang(l); })();
+
+// Show more/less projects
+function toggleProjects() {
+  const more = document.querySelector('.more-projects');
+  const btn = document.getElementById('show-more-btn');
+  if (more.style.display === 'none') {
+    more.style.display = '';
+    btn.textContent = 'Show less';
+  } else {
+    more.style.display = 'none';
+    btn.textContent = 'Show 5 more projects';
+  }
+}
 
 // Lightbox for screenshots
 document.querySelectorAll('.card-img').forEach(img => {
