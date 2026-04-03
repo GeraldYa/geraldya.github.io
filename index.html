@@ -72,6 +72,23 @@
   .contact .links { margin-bottom: 0; }
 
   footer { text-align: center; padding: 30px 0; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
+  footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 10px; }
+  footer .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  footer .footer-links a:hover { color: var(--accent); }
+
+  /* Animations */
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { opacity: 0; animation: fadeInUp 0.6s ease forwards; }
+  .fade-in:nth-child(1) { animation-delay: 0s; }
+  .fade-in:nth-child(2) { animation-delay: 0.1s; }
+  .fade-in:nth-child(3) { animation-delay: 0.2s; }
+  header { animation: fadeInUp 0.6s ease; }
+  .summary { animation: fadeInUp 0.6s ease 0.2s both; }
+  .stats { animation: fadeInUp 0.6s ease 0.3s both; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -103,8 +120,13 @@
   <div class="stat"><div class="stat-num">9+</div><div class="stat-label">Years Client-Facing</div></div>
 </div>
 
-<h2>Projects</h2>
-<div class="projects">
+<h2 class="reveal">My Story</h2>
+<div class="summary reveal" style="text-align: left; max-width: 100%; margin-bottom: 50px;">
+  I started in a small computer shop in St. Catharines, fixing machines and selling tech. Over seven years I worked my way up to Store Manager, where I learned that the hardest part of technology isn't building it &mdash; it's helping people understand and trust it. That insight stuck with me when I taught myself to code and started building AI-powered tools. Today I ship real products: trading dashboards, multi-agent AI systems, IoT displays, and web platforms &mdash; all self-built and running in production. I'm looking for a role where both sides of me matter: the builder and the communicator.
+</div>
+
+<h2 class="reveal">Projects</h2>
+<div class="projects reveal">
 
   <div class="card">
     <img src="screenshots/multi-agent.jpg" alt="Multi-Agent AI Platform" class="card-img">
@@ -156,7 +178,7 @@
 
 </div>
 
-<h2>Beyond Code</h2>
+<h2 class="reveal">Beyond Code</h2>
 <div class="projects" style="margin-bottom: 50px;">
   <div class="card">
     <div class="card-icon">&#127891;</div>
@@ -180,8 +202,8 @@
   </div>
 </div>
 
-<h2>Tech Stack</h2>
-<div class="skills">
+<h2 class="reveal">Tech Stack</h2>
+<div class="skills reveal">
   <span class="skill">Claude API</span>
   <span class="skill">Gemini API</span>
   <span class="skill">Multi-Agent AI</span>
@@ -204,8 +226,8 @@
   <span class="skill">PowerShell</span>
 </div>
 
-<h2>Experience</h2>
-<div class="experience">
+<h2 class="reveal">Experience</h2>
+<div class="experience reveal">
   <div class="job">
     <h3>Geek Squad Field Agent</h3>
     <div class="meta">Best Buy Canada &mdash; Oct 2022 - Present</div>
@@ -223,8 +245,8 @@
   </div>
 </div>
 
-<h2>Education</h2>
-<div class="experience">
+<h2 class="reveal">Education</h2>
+<div class="experience reveal">
   <div class="job">
     <h3>Bachelor of Arts in Economics</h3>
     <div class="meta">Brock University &mdash; 2016</div>
@@ -246,9 +268,54 @@
 </div>
 
 <footer>
+  <div class="footer-links">
+    <a href="https://github.com/GeraldYa">GitHub</a>
+    <a href="https://www.linkedin.com/in/gerald-yang-ai">LinkedIn</a>
+    <a href="mailto:gerald6331@gmail.com">Email</a>
+  </div>
   &copy; 2026 Gerald Yang &mdash; Built with purpose.
 </footer>
 
 </div>
+
+<script>
+// Counter animation
+function animateCounters() {
+  document.querySelectorAll('.stat-num').forEach(el => {
+    const text = el.textContent;
+    const match = text.match(/(\d+)/);
+    if (!match) return;
+    const target = parseInt(match[1]);
+    const suffix = text.replace(/\d+/, '');
+    let current = 0;
+    const step = Math.max(1, Math.floor(target / 30));
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      el.textContent = current + suffix;
+    }, 30);
+  });
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Start counter when stats section is visible
+const statsObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { animateCounters(); statsObs.disconnect(); }
+  });
+}, { threshold: 0.5 });
+const statsEl = document.querySelector('.stats');
+if (statsEl) statsObs.observe(statsEl);
+</script>
 </body>
 </html>
