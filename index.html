@@ -20,8 +20,8 @@
   :root { --bg: #0f0e17; --card: #1a1830; --accent: #e8976b; --accent2: #9b8ec4; --text: #e8e4dc; --muted: #8a8598; --border: rgba(255,220,180,0.08); --accent-glow: rgba(232,151,107,0.10); }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-  .bg-fixed { position: fixed; inset: 0; z-index: -2; background: url('bg-twilight.jpg') center/cover no-repeat; opacity: 0.18; }
-  .bg-gradient { position: fixed; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(15,14,23,0.3) 0%, rgba(15,14,23,0.85) 50%, rgba(15,14,23,0.95) 100%); }
+  .bg-fixed { position: fixed; inset: 0; z-index: -2; background: url('bg-twilight.jpg') center/cover no-repeat; opacity: 0.45; }
+  .bg-gradient { position: fixed; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(15,14,23,0.1) 0%, rgba(15,14,23,0.5) 60%, rgba(15,14,23,0.8) 100%); }
   body.light .bg-fixed { opacity: 0.12; }
   body.light .bg-gradient { background: linear-gradient(180deg, rgba(250,246,239,0.4) 0%, rgba(250,246,239,0.88) 50%, rgba(250,246,239,0.97) 100%); }
   body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.015; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
