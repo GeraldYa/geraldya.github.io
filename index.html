@@ -19,7 +19,11 @@
 <style>
   :root { --bg: #0f0e17; --card: #1a1830; --accent: #e8976b; --accent2: #9b8ec4; --text: #e8e4dc; --muted: #8a8598; --border: rgba(255,220,180,0.08); --accent-glow: rgba(232,151,107,0.10); }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--bg); background-image: linear-gradient(135deg, rgba(232,151,107,0.04) 0%, transparent 40%), linear-gradient(225deg, rgba(155,142,196,0.03) 0%, transparent 40%); color: var(--text); line-height: 1.6; }
+  body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .bg-fixed { position: fixed; inset: 0; z-index: -2; background: url('bg-twilight.jpg') center/cover no-repeat; opacity: 0.18; }
+  .bg-gradient { position: fixed; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(15,14,23,0.3) 0%, rgba(15,14,23,0.85) 50%, rgba(15,14,23,0.95) 100%); }
+  body.light .bg-fixed { opacity: 0.12; }
+  body.light .bg-gradient { background: linear-gradient(180deg, rgba(250,246,239,0.4) 0%, rgba(250,246,239,0.88) 50%, rgba(250,246,239,0.97) 100%); }
   body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.015; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
   .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
@@ -169,6 +173,8 @@
 </head>
 <body>
 
+<div class="bg-fixed"></div>
+<div class="bg-gradient"></div>
 <div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close" onclick="event.stopPropagation();closeLightbox()">&times;</button><img id="lb-img" src="" alt="" onclick="event.stopPropagation()"></div>
 <a href="#" class="logo-fixed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36"><rect width="100" height="100" rx="20" fill="#1a1830" stroke="#e8976b" stroke-width="4"/><text x="50" y="68" font-family="monospace" font-size="52" font-weight="bold" fill="#e8976b" text-anchor="middle">GY</text></svg></a>
 <div class="top-controls">
