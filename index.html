@@ -660,6 +660,9 @@ const statsObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 const statsEl = document.querySelector('.stats');
 if (statsEl) statsObs.observe(statsEl);
+
+// Visitor tracking
+try { fetch('https://kan-pian.com/api/track', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ page:location.pathname, ref:document.referrer, lang:navigator.language, screen:screen.width+'x'+screen.height }), keepalive:true }).catch(()=>{}); } catch {}
 </script>
 </body>
 </html>
