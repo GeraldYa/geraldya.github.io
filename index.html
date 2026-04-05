@@ -49,10 +49,10 @@
   @media (max-width: 900px) { .projects { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 600px) { .projects { grid-template-columns: 1fr; } }
 
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; }
-  .card:hover { border-color: var(--accent); transform: translateY(-4px) scale(1.01); box-shadow: 0 16px 40px rgba(124, 58, 237, 0.15), 0 0 0 1px rgba(139,124,246,0.1); }
-  .card-icon { font-size: 1.8rem; margin-bottom: 12px; }
-  .card-img { width: 100%; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.2s; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.25s; position: relative; overflow: hidden; }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 32px var(--accent-glow), 0 0 0 1px rgba(139,124,246,0.1); }
+  .card-icon { font-size: 1.8rem; margin-bottom: 16px; }
+  .card-img { width: 100%; border-radius: 8px; margin-bottom: 16px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.2s; }
   .card-img:hover { opacity: 0.9; }
   .card-img.hidden { display: none; }
   .card-icon.fallback { display: none; }
@@ -62,6 +62,9 @@
   .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; cursor: zoom-out; justify-content: center; align-items: center; }
   .lightbox.active { display: flex; }
   .lightbox img { max-width: 95%; max-height: 95%; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+  .lightbox-close { position: fixed; top: 20px; right: 24px; z-index: 1001; background: rgba(255,255,255,0.15); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; display: none; transition: background 0.2s; backdrop-filter: blur(8px); }
+  .lightbox.active .lightbox-close { display: flex; align-items: center; justify-content: center; }
+  .lightbox-close:hover { background: rgba(255,255,255,0.3); }
   .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
   .card .tech { font-size: 0.8rem; color: var(--accent); margin-bottom: 10px; }
   .card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 12px; }
@@ -141,11 +144,32 @@
   /* Scroll reveal */
   .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Focus styles for keyboard nav */
+  a:focus-visible, button:focus-visible, .top-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .links a:focus-visible { outline-offset: 0; }
+
+  /* Language menu active state */
+  .lang-menu a.active { color: var(--accent); font-weight: 600; }
+
+  /* Tablet breakpoint */
+  @media (max-width: 768px) { .projects { grid-template-columns: 1fr 1fr; gap: 16px; } .stats { gap: 24px; } }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* Skill hover consistency */
+  .skill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); transform: translateY(-1px); transition: all 0.25s ease; }
+  .job:hover { border-left-color: var(--accent); transition: border-color 0.25s ease; }
 </style>
 </head>
 <body>
 
-<div class="lightbox" onclick="this.classList.remove('active')"><img id="lb-img" src="" alt=""></div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close" onclick="event.stopPropagation();closeLightbox()">&times;</button><img id="lb-img" src="" alt="" onclick="event.stopPropagation()"></div>
 <a href="#" class="logo-fixed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36"><rect width="100" height="100" rx="20" fill="#13132a" stroke="#8b7cf6" stroke-width="4"/><text x="50" y="68" font-family="monospace" font-size="52" font-weight="bold" fill="#8b7cf6" text-anchor="middle">GY</text></svg></a>
 <div class="top-controls">
   <div style="position:relative">
@@ -572,10 +596,13 @@ function setLang(lang) {
   if (!t) return;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
-    if (t[key]) el.innerHTML = t[key];
+    if (t[key]) el.textContent = t[key];
   });
   document.querySelector('.lang-menu').classList.remove('show');
   document.querySelector('.top-controls .top-btn').textContent = lang.toUpperCase();
+  document.querySelectorAll('.lang-menu a').forEach(a => {
+    a.classList.toggle('active', a.textContent.toLowerCase().includes(lang === 'zh' ? '中' : lang === 'fr' ? 'fran' : lang === 'es' ? 'espa' : 'english'));
+  });
   localStorage.setItem('lang', lang);
 }
 (function() { const l = localStorage.getItem('lang'); if (l && l !== 'en') setLang(l); })();
@@ -594,11 +621,16 @@ function toggleProjects() {
 }
 
 // Lightbox for screenshots
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
 document.querySelectorAll('.card-img').forEach(img => {
   img.addEventListener('click', () => {
-    const lb = document.querySelector('.lightbox');
     document.getElementById('lb-img').src = img.src;
-    lb.classList.add('active');
+    document.getElementById('lightbox').classList.add('active');
   });
 });
 
