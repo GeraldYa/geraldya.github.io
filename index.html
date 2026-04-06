@@ -351,13 +351,13 @@
     <div class="card-icon">&#128736;</div>
     <h3 data-i18n="w1t">How I Built a 5-Agent AI Platform from Scratch</h3>
     <p data-i18n="w1d">5 agents, 24/7 uptime, 6 months of accumulated memory. Architecture decisions, orchestration design, and what I learned building it.</p>
-    <a href="blog-multi-agent.html" class="read-btn">Read Article &rarr;</a>
+    <a href="blog-multi-agent.html" class="read-btn" id="link-w1" data-i18n="readarticle">Read Article &rarr;</a>
   </div>
   <div class="card">
     <div class="card-icon">&#128640;</div>
     <h3 data-i18n="w2t">From Retail Manager to Shipping Production Code in 12 Months</h3>
     <p data-i18n="w2d">0 to 10 production services in 12 months. No bootcamp, no CS degree. The honest timeline and what actually worked.</p>
-    <a href="blog-learning-path.html" class="read-btn">Read Article &rarr;</a>
+    <a href="blog-learning-path.html" class="read-btn" id="link-w2" data-i18n="readarticle">Read Article &rarr;</a>
   </div>
 </div>
 
@@ -608,6 +608,11 @@ function setLang(lang) {
     const key = el.dataset.i18n;
     if (t[key]) el.textContent = t[key];
   });
+  // Switch blog links for Chinese
+  const w1 = document.getElementById('link-w1');
+  const w2 = document.getElementById('link-w2');
+  if (w1) w1.href = lang === 'zh' ? 'blog-multi-agent-zh.html' : 'blog-multi-agent.html';
+  if (w2) w2.href = lang === 'zh' ? 'blog-learning-path-zh.html' : 'blog-learning-path.html';
   document.querySelector('.lang-menu').classList.remove('show');
   document.querySelector('.top-controls .top-btn').textContent = lang.toUpperCase();
   document.querySelectorAll('.lang-menu a').forEach(a => {

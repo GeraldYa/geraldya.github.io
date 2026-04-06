@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从零售店长到独立交付生产代码，我用了12个月 — Gerald Yang</title>
+<meta name="description" content="零编程基础，一年内上线7个生产服务。没有训练营，没有CS学位。这是一份诚实的复盘。">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0a0a14; --card: #13132a; --accent: #8b7cf6; --text: #e8e8f0; --muted: #8888a8; --border: #22223a; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+  body.light { --bg: #f8f7f4; --card: #fff; --accent: #7c6bdf; --text: #1a1a2e; --muted: #555; --border: #e2e0da; }
+  .container { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
+  .back { color: var(--accent); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 32px; }
+  .back:hover { text-decoration: underline; }
+  .top-controls { position: fixed; top: 16px; right: 16px; z-index: 100; }
+  .top-btn { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; cursor: pointer; color: var(--muted); font-size: 0.85rem; font-family: inherit; transition: all 0.2s; }
+  .top-btn:hover { border-color: var(--accent); color: var(--accent); }
+  h1 { font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 40px; display: flex; gap: 16px; flex-wrap: wrap; }
+  h2 { font-size: 1.4rem; font-weight: 600; margin: 40px 0 16px; color: var(--accent); }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 28px 0 12px; }
+  p { margin-bottom: 18px; font-size: 1rem; }
+  code { font-family: 'JetBrains Mono', monospace; background: var(--card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; font-size: 0.88em; }
+  blockquote { border-left: 3px solid var(--accent); padding: 12px 20px; margin: 0 0 18px; background: rgba(139,124,246,0.06); border-radius: 0 8px 8px 0; color: var(--muted); font-style: italic; }
+  ul, ol { margin: 0 0 18px; padding-left: 24px; }
+  li { margin-bottom: 8px; }
+  .timeline { border-left: 2px solid var(--accent); padding-left: 20px; margin: 24px 0; }
+  .tl-item { margin-bottom: 20px; position: relative; }
+  .tl-item::before { content: ''; position: absolute; left: -25px; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .tl-month { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent); font-weight: 600; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .takeaway { background: rgba(139,124,246,0.08); border: 1px solid rgba(139,124,246,0.2); border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+  .takeaway h3 { margin-top: 0; color: var(--accent); }
+  .stat-row { display: flex; gap: 16px; margin: 24px 0; flex-wrap: wrap; }
+  .stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; text-align: center; flex: 1; min-width: 120px; }
+  .stat-box .num { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+  .stat-box .label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding-top: 20px; border-top: 1px solid var(--border); }
+  @media (max-width: 600px) { h1 { font-size: 1.6rem; } .container { padding: 24px 16px 60px; } .stat-row { gap: 8px; } }
+</style>
+</head>
+<body>
+<div class="top-controls"><button class="top-btn" onclick="document.body.classList.toggle('light'); this.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light'">Light</button></div>
+<div class="container">
+<a href="/" class="back">&larr; Back to portfolio</a>
+
+<h1>从零售店长到独立交付生产代码，我用了12个月</h1>
+<div class="meta">
+  <span>Gerald Yang</span>
+  <span>2026年4月</span>
+  <span>阅读约7分钟</span>
+</div>
+
+<p>2024年1月，我写不出一个函数。到了12月，我已经有7个以上的 Web 服务跑在生产环境，每天为真实用户提供服务。没上过训练营，没有计算机学位。靠的是十年对技术的好奇心，和一股不甘心只当旁观者的劲儿。</p>
+
+<p>以下是一份诚实的复盘。</p>
+
+<h2>背景：并非从零开始</h2>
+
+<p>先说清楚：严格来说，我的起点不算零。我在科技零售行业干了 <strong>9年</strong>——卖过电脑、管理过 Apple 授权经销商、做过 Geek Squad 上门维修技术员。这些年下来，我对以下这些东西有直觉：</p>
+
+<ul>
+  <li>系统的运作原理（网络、存储、操作系统）</li>
+  <li>用户到底需要什么（跟上千个客户聊出来的经验）</li>
+  <li>生意怎么转（损益表、库存、团队管理）</li>
+  <li>PowerShell 脚本自动化（我最早的"编程"经历）</li>
+</ul>
+
+<p>但我<em>完全没碰过</em>的是：Web 应用开发、API 对接、JavaScript / Python / Node.js，以及怎么部署一个服务。</p>
+
+<h2>时间线</h2>
+
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-month">2024年1&ndash;2月</div>
+    <p>拿 Claude 当编程老师，每一行代码都要它解释清楚。写些小脚本——天气查询、文件批量重命名、价格爬虫。进度慢得让人绝望。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">2024年3&ndash;4月</div>
+    <p>第一个真正的项目：用 Claude API 做了一个 Telegram 问答机器人。学会了 API Key、async/await、错误处理。第一次看到自己写的东西跑在服务器上。我记得当时在超市买菜，掏出手机在 Telegram 里问了它一个问题，回复跳了出来。服务器在家里，我站在香蕉堆旁边。它跑通了。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">2024年5&ndash;6月</div>
+    <p>做了 Polymarket 交易看板。这个项目逼着我认真——真金白银押在上面，API 对接必须搞对。学了 Express、REST API、ethers.js。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">2024年7&ndash;8月</div>
+    <p>ESP32 墨水屏项目。从 Web 跳到嵌入式（C语言、ESP-IDF），完全是另一个世界。做了一个服务端渲染器，把天气、股票、新闻推送到实体墨水屏上。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">2024年9&ndash;10月</div>
+    <p>多智能体 AI 平台。到这个阶段，感觉什么东西松动了。动手写代码之前，我先在纸上画了系统架构图：五个方框，箭头连起来，底下是共享文件系统。画了十分钟，画完才发现——我全程没查任何资料，架构已经在我脑子里了。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-month">2024年11&ndash;12月</div>
+    <p>基础设施成熟期。上了 Cloudflare Tunnel、搭了家用仪表盘、统一了工具箱入口、加了监控。从"造东西"转向"维护生产系统"。</p>
+  </div>
+</div>
+
+
+<h2>真正管用的方法</h2>
+
+<h3>1. 拿 AI 当老师，不当拐杖</h3>
+
+<p>我大量使用 Claude，但从不复制粘贴了事。我的规矩是：<strong>如果我解释不清每一行在干什么，就不上线。</strong>开头确实慢，但这意味着我是真学到了东西。</p>
+
+<p>流程是这样的：描述需求 &rarr; 拿到代码 &rarr; 逐行读 &rarr; 追问"为什么用这个方案" &rarr; 自己改 &rarr; 改崩了 &rarr; 修好。</p>
+
+<h3>2. 只做真问题，不刷教程</h3>
+
+<p>我一个教程都没刷完过。每个项目的起点都是一个我自己遇到的实际问题：</p>
+<ul>
+  <li>"我想跟踪 Polymarket 的交易" &rarr; 交易看板</li>
+  <li>"我想要个智能家居屏" &rarr; 墨水屏项目</li>
+  <li>"我想要能记住我的 AI 助手" &rarr; 多智能体平台</li>
+  <li>"我需要快速给客户出报价" &rarr; ServiceQuote 工具</li>
+</ul>
+
+<p>事实证明，修自己用坏的东西带来的动力，是做别人练习题的十倍。</p>
+
+<h3>3. 先上线，再迭代</h3>
+
+<p>我第一个 Telegram Bot 只有50行代码，没有错误处理，三天两头崩。但它够用，能验证想法，后面的势头就接上了。到现在，每个项目至少重写过两遍。</p>
+
+<h3>4. 零售经验比你想的更有用</h3>
+
+<p>哪些技能迁移过来了，说出来我自己都意外。九年里给各种困惑的家长解释内存升级，练出来的表达能力，写 UI 文案时直接就用上了。给客户排查一台坏掉的 MacBook 和排查一个崩溃的 Node.js 进程，用的是同一套逻辑：隔离问题、复现、测试。</p>
+
+<p>管过门店——真实的损益、真实的库存、真实的排班——让我养成了一个习惯：先问"这个跑起来花多少钱"，再问"这个能干什么"。这个问题省下的工程时间，比任何框架都多。</p>
+
+<h2>两件重要的事</h2>
+
+<p>没人给我颁过"开发者"的头衔。我上线了7个服务，然后这就成了事实。</p>
+
+<p>我所有东西都是在 AI 辅助下写的。我也能脱离 AI 解释每一行代码。这两件事不矛盾。</p>
+
+<h2>现在的我</h2>
+
+<p>一年前我还在修打印机。现在凌晨两点我在跟我的 AI agent 争论代码架构。下一个十二个月会怎样我不知道，但方法已经定了：找到问题，动手做，上线，改进。就这么简单，没有什么秘诀。</p>
+
+<p>想看看我搭的那套系统？<a href="blog-multi-agent-zh.html" style="color:var(--accent)">多智能体平台的详细拆解在这里</a>。</p>
+
+<hr>
+<p style="font-size:0.9rem; color:var(--muted); text-align:center; margin-top:20px;"><strong>Gerald Yang</strong> &mdash; 坐标安大略的 AI 解决方案开发者。正在寻找"既要造东西又要讲清楚"的工作机会。<br><a href="mailto:gerald6331@gmail.com" style="color:var(--accent)">Email</a> &middot; <a href="https://www.linkedin.com/in/gerald-yang-ai" style="color:var(--accent)">LinkedIn</a> &middot; <a href="https://github.com/GeraldYa" style="color:var(--accent)">GitHub</a></p>
+
+<hr>
+<footer>&copy; 2026 Gerald Yang &mdash; <a href="/" style="color:var(--accent);text-decoration:none">Back to portfolio</a></footer>
+</div>
+</body>
+</html>

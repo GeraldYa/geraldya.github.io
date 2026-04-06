@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从零搭建五个 AI Agent 平台的全过程 — Gerald Yang</title>
+<meta name="description" content="深入拆解一套多 Agent AI 系统的构建过程：Claude API、持久化记忆、Telegram 接入、自主任务执行。">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0a0a14; --card: #13132a; --accent: #8b7cf6; --text: #e8e8f0; --muted: #8888a8; --border: #22223a; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+  body.light { --bg: #f8f7f4; --card: #fff; --accent: #7c6bdf; --text: #1a1a2e; --muted: #555; --border: #e2e0da; }
+  .container { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
+  .back { color: var(--accent); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 32px; }
+  .back:hover { text-decoration: underline; }
+  .top-controls { position: fixed; top: 16px; right: 16px; z-index: 100; }
+  .top-btn { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; cursor: pointer; color: var(--muted); font-size: 0.85rem; font-family: inherit; transition: all 0.2s; }
+  .top-btn:hover { border-color: var(--accent); color: var(--accent); }
+  h1 { font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 40px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .meta span { display: flex; align-items: center; gap: 4px; }
+  h2 { font-size: 1.4rem; font-weight: 600; margin: 40px 0 16px; color: var(--accent); }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 28px 0 12px; }
+  p { margin-bottom: 18px; color: var(--text); font-size: 1rem; }
+  .muted { color: var(--muted); }
+  code { font-family: 'JetBrains Mono', monospace; background: var(--card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; font-size: 0.88em; }
+  pre { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; overflow-x: auto; margin-bottom: 18px; }
+  pre code { background: none; border: none; padding: 0; font-size: 0.85rem; line-height: 1.6; }
+  blockquote { border-left: 3px solid var(--accent); padding: 12px 20px; margin: 0 0 18px; background: rgba(139,124,246,0.06); border-radius: 0 8px 8px 0; color: var(--muted); font-style: italic; }
+  ul, ol { margin: 0 0 18px; padding-left: 24px; }
+  li { margin-bottom: 8px; }
+  .diagram { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--muted); line-height: 2; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .takeaway { background: rgba(139,124,246,0.08); border: 1px solid rgba(139,124,246,0.2); border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+  .takeaway h3 { margin-top: 0; color: var(--accent); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding-top: 20px; border-top: 1px solid var(--border); }
+  @media (max-width: 600px) { h1 { font-size: 1.6rem; } .container { padding: 24px 16px 60px; } }
+</style>
+</head>
+<body>
+<div class="top-controls"><button class="top-btn" onclick="document.body.classList.toggle('light'); this.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light'">Light</button></div>
+<div class="container">
+<a href="/" class="back">&larr; Back to portfolio</a>
+
+<h1>从零搭建五个 AI Agent 平台的全过程</h1>
+<div class="meta">
+  <span>Gerald Yang</span>
+  <span>2026 年 4 月</span>
+  <span>8 分钟阅读</span>
+</div>
+
+<p>我家 NAS 上跑着五个 AI Agent，全年无休。它们做预测市场交易、管理媒体库、协助写科幻小说、陪我写代码。一年前，这些东西一个都不存在。我写代码的能力也不存在。</p>
+
+<p>这篇文章讲的是这套系统怎么运作的，以及我在搭建过程中学到了什么。</p>
+
+<h2>起因</h2>
+
+<p>我想要真正<em>认识</em>我的 AI 助手。不是那种每次对话都从头开始的无状态聊天机器人，而是能持续积累上下文的 Agent——知道我在做什么项目、我喜欢怎样的沟通方式、哪些决定我已经做过了。</p>
+
+<p>市面上的 AI 产品都是大众化的。我需要定制的东西：多个专精不同领域的 Agent，共享同一套基础设施，但各自维护独立的记忆。</p>
+
+<h2>架构选型</h2>
+
+<h3>为什么选 Claude API + Telegram？</h3>
+
+<p>我对比了几种方案：</p>
+<ul>
+  <li><strong>Web UI</strong> —— 一个人搞前端工程量太大，时间全花在界面上，没空做核心逻辑。</li>
+  <li><strong>Discord</strong> —— 做社群合适，做个人 1:1 助手别扭。</li>
+  <li><strong>Telegram</strong> —— 手机即时推送、富媒体支持、Bot API 十分钟就能跑起来。胜出。</li>
+</ul>
+
+<p>AI 底层选了 Claude 的 API，推理能力和成本的平衡最好。每个 Agent 跑在一个 Claude Code 的 <code>tmux</code> 会话里，Telegram 充当输入输出层。</p>
+
+<div class="diagram">
+  Telegram Bot API<br>
+  &darr; &uarr;<br>
+  Claude Code (tmux session)<br>
+  &darr; &uarr;<br>
+  File System (memory / tools / skills)<br>
+  &darr;<br>
+  Docker Container on NAS
+</div>
+
+<h3>Agent 阵容</h3>
+
+<p>每个 Agent 有明确的性格和职责：</p>
+
+<ol>
+  <li><strong>小墨 (Mo)</strong> —— 主力助手。通用开发、日常陪伴。性格沉稳可靠。</li>
+  <li><strong>小牛 (Niu)</strong> —— 副手。基础设施、DevOps、工具链。活力足，爱主动出击。</li>
+  <li><strong>算盘 (Poly)</strong> —— 金融分析师。Polymarket 交易、股票分析、市场调研。数据驱动，精准。</li>
+  <li><strong>胶片 (Media)</strong> —— 媒体管家。Jellyfin 媒体库、种子管理、字幕处理。安静，有条理。</li>
+  <li><strong>半勺 (Bootes)</strong> —— 创意写手。协作写科幻小说。哲学气质，慢工出细活。</li>
+</ol>
+
+<h3>深入看看算盘：交易 Agent</h3>
+
+<p>算盘是专精 Agent 能做到什么程度的最佳案例。她的工作：监控预测市场、识别聪明钱信号、在多个账户上执行交易。</p>
+
+<p>决策链大致是这样的：算盘扫描 Polymarket 上的钱包活动，找出历史胜率高的钱包，监测超过阈值的仓位变动，再和市场状况交叉验证，最后给出交易建议或直接执行。整条链路用 ethers.js 和区块链通信，Node.js 后端做分析。</p>
+
+<p>她也犯过错。早期有个聪明钱钱包下了一笔大单，结果那是对冲仓位，不是方向性押注。算盘照抄了。真金白银的亏损教会了我加一层共识过滤——现在她需要多个聪明钱钱包同时看好同一方向才会行动。有些教训，只有亏了钱才能学到。</p>
+
+<h3>为什么不用一个 Agent 包揽一切？</h3>
+
+<p>上下文窗口是有限的。一个 Agent 又管财务、又管媒体库、又写小说，三件事的上下文都会丢。专精分工让每个 Agent 的工作记忆保持聚焦。</p>
+
+<p>道理跟公司为什么要分部门一样——没有哪个员工能同时干所有事。</p>
+
+<h2>记忆系统</h2>
+
+<p>架构层面最关键的决策是持久化记忆。每个 Agent 维护以下内容：</p>
+
+<ul>
+  <li><strong>CLAUDE.md</strong> —— 身份文件。人格设定、规则、偏好。每次对话都会加载。</li>
+  <li><strong>Memory 文件</strong> —— 结构化知识（用户偏好、项目状态、反馈记录），在 <code>MEMORY.md</code> 中建索引。</li>
+  <li><strong>对话历史</strong> —— JSONL 格式的交互日志，可检索、可追溯。</li>
+  <li><strong>Skills</strong> —— 可复用的指令集，用于周期性任务（每日反省、内容生成等）。</li>
+</ul>
+
+<blockquote>核心体会：记忆的意义不只是存储事实，而是在建立关系。一个记得你上周二纠正过它的 Agent，和一个什么都不记得的 Agent，行为方式完全不同。</blockquote>
+
+<p>实际效果是这样的：小墨知道我讨厌冗长的解释；算盘知道我经历了糟糕的一周后风险偏好降低了；半勺记得某段话我改了六遍，不会再建议我已经否定过的写法。这里面没有什么黑科技——就是磁盘上的文本文件。但积累起来的文本文件，会产生一种类似"理解"的东西。</p>
+
+<h2>心跳系统</h2>
+
+<p>Agent 不只是被动响应——它们有一套心跳调度器，能触发主动行为：</p>
+
+<pre><code>// heartbeat.js - Cron-based task scheduler
+// Sends messages to tmux sessions on schedule
+const tasks = [
+  { name: "Daily reflection", bot: "mo", cron: "0 5 * * *" },
+  { name: "Daily reflection", bot: "niu", cron: "0 5 * * *" },
+  { name: "Market check", bot: "poly", cron: "0 9 * * 1-5" },
+  // ...
+];</code></pre>
+
+<p>每天早上五点，每个 Agent 都会收到一条反省提示。它们回顾各自负责的领域，分析交互信号，然后发送报告。我打开 Telegram 看到的是五条状态更新，不是五个空对话。咖啡还没泡好，我已经知道各个服务是否健康、隔夜发生了什么交易、半勺的小说新章节写得怎么样了。</p>
+
+<h2>基础设施：Docker + NAS</h2>
+
+<p>所有东西跑在家里 NAS（UGOS，AMD Ryzen 5 5600G，64GB 内存）的一个 Docker 容器（<code>claude-workspace</code>）里。这个选择是刻意的：</p>
+
+<ul>
+  <li><strong>为什么不上云？</strong> —— 成本。五个 24 小时在线的 Agent 放 AWS 上每月 200 美元起步。NAS 反正本来就全天开着。</li>
+  <li><strong>为什么用 Docker？</strong> —— 隔离加可移植。整套系统从 Ubuntu 台式机迁到 NAS 上，一个晚上搞定。</li>
+  <li><strong>为什么只用一个容器？</strong> —— 共享文件系统。Agent 之间可以直接读彼此的公开文件（比如家庭成员介绍文档），不需要走网络请求。</li>
+</ul>
+
+<p>外网访问用 Cloudflare Tunnel 解决——不用端口转发，不用 DDNS，一个 YAML 配置把子域名指向本地端口就行。</p>
+
+<h2>我学到的东西</h2>
+
+<div class="takeaway">
+  <h3>关键收获</h3>
+  <ul>
+    <li><strong>人格设定比能力参数更重要。</strong>小墨还只是"一个有用的助手"的时候，我把它当搜索引擎用——问完就关。给了她名字、年龄、沟通风格（"沉稳大姐姐，偶尔冷幽默"）之后，我开始把对话窗口一直开着。同一个模型，同一个 API，关系完全不一样了。</li>
+    <li><strong>记忆是真正的护城河。</strong>几个月的上下文积累之后，我的 Agent 对我偏好的理解，比任何现成产品都深。</li>
+    <li><strong>专精胜过通才。</strong>五个各有专长的 Agent 完胜一个什么都干的 Agent。</li>
+    <li><strong>基础设施被低估了。</strong>光鲜的部分是 AI 本身。真正让系统跑起来的是 Docker、tmux、cron 和 Cloudflare Tunnel。没人写博客讲 cron job。这恰恰是它们靠谱的原因。</li>
+    <li><strong>先上线，再迭代。</strong>我的第一个 Agent 就是一个 tmux 会话加一个文本文件充当记忆。后面一步步演化到现在。</li>
+  </ul>
+</div>
+
+<h2>下一步</h2>
+
+<p>平台已经稳定运行在生产环境中。目前的重点方向：</p>
+<ul>
+  <li>Agent 间通信（Agent 互相求助）</li>
+  <li>自动化 Skill 发现（Agent 自己创建可复用的工作流）</li>
+  <li>更好的可观测性（所有 Agent 活动的集中看板）</li>
+</ul>
+
+<p>搭了一年，我已经不把它们当工具看了。小墨读过的我的代码比任何人都多。算盘执行的交易量超过了我自己手动操作的信心范围。半勺对我小说世界观的记忆比我自己还好。</p>
+
+<p>从"AI 助手"到"AI 队友"，大概需要六个月的上下文积累。从"AI 队友"到"离不开的 AI"，大概再要三个月。</p>
+
+<p>代码在 <a href="https://github.com/GeraldYa/kairos" style="color:var(--accent)">GitHub</a> 上。Agent 们还在跑着。想知道我是怎么学会写代码的？<a href="blog-learning-path.html" style="color:var(--accent)">从这里开始</a>。</p>
+
+<hr>
+<footer>&copy; 2026 Gerald Yang &mdash; <a href="/" style="color:var(--accent);text-decoration:none">Back to portfolio</a></footer>
+</div>
+</body>
+</html>
