@@ -125,10 +125,7 @@
   body.light .card-img { border-color: rgba(120,100,60,0.12); }
   body.light .tl-item::before { background: #c47a52; }
 
-  /* GSAP-driven — initial states set by JS, no CSS animations needed */
-  .gsap-ready header, .gsap-ready .summary, .gsap-ready .stats,
-  .gsap-ready .projects .card, .gsap-ready .reveal,
-  .gsap-ready .skill, .gsap-ready .job, .gsap-ready .tl-item { opacity: 0; }
+  /* GSAP sets initial states via JS — CSS fallback keeps content visible */
 
   /* Mouse glow follower */
   .cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 0; background: radial-gradient(circle, rgba(232,151,107,0.07) 0%, transparent 70%); transform: translate(-50%,-50%); transition: opacity 0.3s; opacity: 0; }
@@ -690,11 +687,11 @@ try { fetch('https://kan-pian.com/api/track', { method:'POST', headers:{'Content
 </script>
 
 <!-- GSAP + ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
 <script>
+if (typeof gsap === 'undefined') { /* GSAP failed to load — do nothing, page stays visible */ } else {
 gsap.registerPlugin(ScrollTrigger);
-document.body.classList.add('gsap-ready');
 
 // ═══ CURSOR GLOW ═══
 const glow = document.createElement('div');
@@ -837,6 +834,7 @@ gsap.to(bar, {
   scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 },
   ease: 'none'
 });
+} // end GSAP safety wrapper
 </script>
 </body>
 </html>
