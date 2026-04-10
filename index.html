@@ -125,29 +125,21 @@
   body.light .card-img { border-color: rgba(120,100,60,0.12); }
   body.light .tl-item::before { background: #c47a52; }
 
-  /* Animations */
-  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .fade-in { opacity: 0; animation: fadeInUp 0.6s ease forwards; }
-  .fade-in:nth-child(1) { animation-delay: 0s; }
-  .fade-in:nth-child(2) { animation-delay: 0.1s; }
-  .fade-in:nth-child(3) { animation-delay: 0.2s; }
+  /* GSAP-driven — initial states set by JS, no CSS animations needed */
+  .gsap-ready header, .gsap-ready .summary, .gsap-ready .stats,
+  .gsap-ready .projects .card, .gsap-ready .reveal,
+  .gsap-ready .skill, .gsap-ready .job, .gsap-ready .tl-item { opacity: 0; }
 
-  /* Staggered card reveals */
-  .projects .card { opacity: 0; animation: cardReveal 0.5s ease forwards; }
-  .projects .card:nth-child(1) { animation-delay: 0.05s; }
-  .projects .card:nth-child(2) { animation-delay: 0.1s; }
-  .projects .card:nth-child(3) { animation-delay: 0.15s; }
-  .projects .card:nth-child(4) { animation-delay: 0.2s; }
-  .projects .card:nth-child(5) { animation-delay: 0.25s; }
-  .projects .card:nth-child(6) { animation-delay: 0.3s; }
-  @keyframes cardReveal { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
-  header { animation: fadeInUp 0.6s ease; }
-  .summary { animation: fadeInUp 0.6s ease 0.2s both; }
-  .stats { animation: fadeInUp 0.6s ease 0.3s both; }
+  /* Mouse glow follower */
+  .cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 0; background: radial-gradient(circle, rgba(232,151,107,0.07) 0%, transparent 70%); transform: translate(-50%,-50%); transition: opacity 0.3s; opacity: 0; }
+  .cursor-glow.active { opacity: 1; }
 
-  /* Scroll reveal */
-  .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+  /* Magnetic hover effect */
+  .magnetic { transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+
+  /* Text split animation helper */
+  .char-wrap { display: inline-block; overflow: hidden; }
+  .char-inner { display: inline-block; }
 
   /* Focus styles for keyboard nav */
   a:focus-visible, button:focus-visible, .top-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
@@ -693,28 +685,158 @@ function animateCounters() {
   });
 }
 
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Start counter when stats section is visible
-const statsObs = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) { animateCounters(); statsObs.disconnect(); }
-  });
-}, { threshold: 0.5 });
-const statsEl = document.querySelector('.stats');
-if (statsEl) statsObs.observe(statsEl);
-
 // Visitor tracking
 try { fetch('https://kan-pian.com/api/track', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ page:location.pathname, ref:document.referrer, lang:navigator.language, screen:screen.width+'x'+screen.height }), keepalive:true }).catch(()=>{}); } catch {}
+</script>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+document.body.classList.add('gsap-ready');
+
+// ═══ CURSOR GLOW ═══
+const glow = document.createElement('div');
+glow.className = 'cursor-glow';
+document.body.appendChild(glow);
+let glowX = 0, glowY = 0, curX = 0, curY = 0;
+document.addEventListener('mousemove', e => { curX = e.clientX; curY = e.clientY; glow.classList.add('active'); });
+document.addEventListener('mouseleave', () => glow.classList.remove('active'));
+(function moveGlow() {
+  glowX += (curX - glowX) * 0.08;
+  glowY += (curY - glowY) * 0.08;
+  glow.style.left = glowX + 'px';
+  glow.style.top = glowY + 'px';
+  requestAnimationFrame(moveGlow);
+})();
+
+// ═══ HERO — SPLIT TEXT ANIMATION ═══
+const h1 = document.querySelector('h1');
+if (h1) {
+  const html = h1.innerHTML;
+  // Wrap each character in span for animation
+  h1.innerHTML = html.replace(/(<[^>]+>)|([^<\s])/g, (match, tag, char) => {
+    if (tag) return tag;
+    return `<span class="char-wrap"><span class="char-inner">${char}</span></span>`;
+  });
+  gsap.from('h1 .char-inner', {
+    y: 60, opacity: 0, rotateX: -40,
+    duration: 0.7, ease: 'back.out(1.7)',
+    stagger: 0.02, delay: 0.3
+  });
+}
+
+// Tagline fade in
+gsap.from('.tagline', { opacity: 0, y: 20, duration: 0.8, delay: 1.0, ease: 'power2.out' });
+
+// Links stagger
+gsap.from('.links a', { opacity: 0, y: 15, scale: 0.8, duration: 0.5, stagger: 0.08, delay: 1.3, ease: 'back.out(2)' });
+
+// CTA buttons
+gsap.from('.cta a', { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, delay: 1.5, ease: 'power2.out' });
+
+// Summary
+gsap.from('.summary', { opacity: 0, y: 30, duration: 0.8, delay: 1.7, ease: 'power2.out' });
+
+// ═══ STATS — COUNTER + ENTRANCE ═══
+gsap.from('.stat', {
+  scrollTrigger: { trigger: '.stats', start: 'top 80%' },
+  opacity: 0, y: 40, scale: 0.8, duration: 0.6, stagger: 0.12, ease: 'back.out(1.5)',
+  onComplete: animateCounters
+});
+
+// ═══ SECTION HEADINGS — WIPE IN ═══
+document.querySelectorAll('h2').forEach(h2 => {
+  gsap.from(h2, {
+    scrollTrigger: { trigger: h2, start: 'top 85%' },
+    opacity: 0, x: -60, duration: 0.7, ease: 'power3.out'
+  });
+});
+
+// ═══ PROJECT CARDS — STAGGERED 3D ENTRANCE ═══
+document.querySelectorAll('.projects').forEach(grid => {
+  gsap.from(grid.querySelectorAll('.card'), {
+    scrollTrigger: { trigger: grid, start: 'top 80%' },
+    opacity: 0, y: 60, rotateY: -8, scale: 0.92,
+    duration: 0.6, stagger: { each: 0.08, grid: 'auto', from: 'start' },
+    ease: 'power2.out'
+  });
+});
+
+// ═══ SKILLS — WAVE STAGGER ═══
+gsap.from('.skill', {
+  scrollTrigger: { trigger: '.skills', start: 'top 80%' },
+  opacity: 0, y: 20, scale: 0.7, rotation: -5,
+  duration: 0.4, stagger: { each: 0.04, from: 'random' },
+  ease: 'back.out(2)'
+});
+
+// ═══ EXPERIENCE — SLIDE FROM LEFT ═══
+document.querySelectorAll('.job').forEach((job, i) => {
+  gsap.from(job, {
+    scrollTrigger: { trigger: job, start: 'top 85%' },
+    opacity: 0, x: -80, duration: 0.7, delay: i * 0.1,
+    ease: 'power3.out'
+  });
+});
+
+// ═══ TIMELINE — ITEMS SLIDE IN ═══
+document.querySelectorAll('.tl-item').forEach((item, i) => {
+  gsap.from(item, {
+    scrollTrigger: { trigger: item, start: 'top 85%' },
+    opacity: 0, x: 60, duration: 0.6, delay: i * 0.08,
+    ease: 'power2.out'
+  });
+});
+
+// ═══ CONTACT — SCALE UP ═══
+gsap.from('.contact', {
+  scrollTrigger: { trigger: '.contact', start: 'top 80%' },
+  opacity: 0, scale: 0.9, y: 40, duration: 0.8,
+  ease: 'power2.out'
+});
+
+// ═══ PARALLAX BACKGROUND ═══
+gsap.to('.bg-fixed', {
+  scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1 },
+  y: -100, ease: 'none'
+});
+
+// ═══ MAGNETIC HOVER ON BUTTONS ═══
+document.querySelectorAll('.links a, .cta a, .top-btn').forEach(el => {
+  el.classList.add('magnetic');
+  el.addEventListener('mousemove', e => {
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.2;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.2;
+    el.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+});
+
+// ═══ CARD TILT ON HOVER ═══
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
+    card.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${y}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    gsap.to(card, { rotateY: 0, rotateX: 0, y: 0, duration: 0.4, ease: 'power2.out' });
+  });
+});
+
+// ═══ SCROLL PROGRESS BAR ═══
+const bar = document.createElement('div');
+bar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#e8976b,#9b8ec4);z-index:9999;transform-origin:left;transform:scaleX(0);';
+document.body.appendChild(bar);
+gsap.to(bar, {
+  scaleX: 1,
+  scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 },
+  ease: 'none'
+});
 </script>
 </body>
 </html>
