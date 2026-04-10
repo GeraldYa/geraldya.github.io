@@ -693,6 +693,94 @@ try { fetch('https://kan-pian.com/api/track', { method:'POST', headers:{'Content
 if (typeof gsap === 'undefined') { /* GSAP failed to load — do nothing, page stays visible */ } else {
 gsap.registerPlugin(ScrollTrigger);
 
+// ═══ ANIMATED PARTICLE CANVAS ═══
+const canvas = document.createElement('canvas');
+canvas.style.cssText = 'position:fixed;inset:0;z-index:-1;pointer-events:none;';
+document.body.appendChild(canvas);
+const ctx = canvas.getContext('2d');
+let W = canvas.width = innerWidth, H = canvas.height = innerHeight;
+window.addEventListener('resize', () => { W = canvas.width = innerWidth; H = canvas.height = innerHeight; });
+
+const particles = Array.from({length: 80}, () => ({
+  x: Math.random() * W, y: Math.random() * H,
+  r: Math.random() * 2 + 0.5,
+  dx: (Math.random() - 0.5) * 0.3,
+  dy: (Math.random() - 0.5) * 0.2 - 0.1,
+  o: Math.random() * 0.4 + 0.1
+}));
+
+let scrollPct = 0;
+ScrollTrigger.create({
+  trigger: 'body', start: 'top top', end: 'bottom bottom',
+  onUpdate: self => { scrollPct = self.progress; }
+});
+
+(function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Dynamic background gradient based on scroll
+  const r1 = Math.round(15 + scrollPct * 10);
+  const g1 = Math.round(14 + scrollPct * 5);
+  const b1 = Math.round(23 + scrollPct * 30);
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, `rgba(${15 + scrollPct*20}, ${14 + scrollPct*10}, ${23 + scrollPct*40}, 0.3)`);
+  grad.addColorStop(0.5, `rgba(${80*scrollPct}, ${30 + 60*scrollPct}, ${80 + 100*scrollPct}, 0.15)`);
+  grad.addColorStop(1, `rgba(${15}, ${14}, ${23 + scrollPct*20}, 0.4)`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Color shifts through scroll: warm amber → violet → cyan
+  const hue = 25 + scrollPct * 180; // 25(orange) → 205(blue)
+
+  particles.forEach(p => {
+    p.x += p.dx + Math.sin(Date.now() * 0.0005 + p.y * 0.01) * 0.2;
+    p.y += p.dy;
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+
+    const alpha = p.o * (0.5 + 0.5 * Math.sin(Date.now() * 0.001 + p.x));
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${hue}, 60%, 70%, ${alpha})`;
+    ctx.fill();
+  });
+
+  // Draw connecting lines between close particles
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `hsla(${hue}, 50%, 60%, ${0.08 * (1 - dist/120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(drawParticles);
+})();
+
+// ═══ SCROLL-DRIVEN COLOR SHIFT ═══
+const bgGrad = document.querySelector('.bg-gradient');
+if (bgGrad) {
+  ScrollTrigger.create({
+    trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: true,
+    onUpdate: self => {
+      const p = self.progress;
+      // Shift overlay from warm to cool
+      bgGrad.style.background = `linear-gradient(180deg,
+        rgba(${15+p*20},${14+p*10},${23+p*40},${0.1+p*0.3}) 0%,
+        rgba(${40*p},${20+50*p},${60+120*p},${0.2+p*0.2}) 50%,
+        rgba(15,14,${23+p*30},${0.7+p*0.2}) 100%)`;
+    }
+  });
+}
+
 // ═══ CURSOR GLOW ═══
 const glow = document.createElement('div');
 glow.className = 'cursor-glow';
