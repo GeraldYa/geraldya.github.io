@@ -884,10 +884,11 @@ document.querySelectorAll('.projects').forEach(grid => {
 
 // ═══ SKILLS — WAVE STAGGER ═══
 gsap.from('.skill', {
-  scrollTrigger: { trigger: '.skills', start: 'top 80%' },
+  scrollTrigger: { trigger: '.skills', start: 'top 90%', toggleActions: 'play none none none' },
   opacity: 0, y: 20, scale: 0.7, rotation: -5,
   duration: 0.4, stagger: { each: 0.04, from: 'random' },
-  ease: 'back.out(2)'
+  ease: 'back.out(2)',
+  immediateRender: false
 });
 
 // ═══ EXPERIENCE — SLIDE FROM LEFT ═══
